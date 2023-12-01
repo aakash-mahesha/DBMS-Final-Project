@@ -1,5 +1,5 @@
-import os
-
-# SECRET_KEY = 'your_secret_key'
-SQLALCHEMY_DATABASE_URI = 'mysql://root:sam123@localhost/pacs'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+class Config:
+    MYSQL_HOST = 'localhost'
+    MYSQL_USER = 'root'
+    MYSQL_PASSWORD = 'sam123'
+    MYSQL_DB = 'pacs'

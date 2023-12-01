@@ -9,11 +9,12 @@ def create_user():
         # Get user data from the form
         username = request.form.get('username')
         email = request.form.get('email')
+        user_password = request.form.get('user_password')
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
 
         # Create a new user instance
-        new_user = User(username=username, email=email, first_name=first_name, last_name=last_name)
+        new_user = User(username=username, email=email, user_password=user_password, first_name=first_name, last_name=last_name)
 
         # Add the user to the database
         db.session.add(new_user)
@@ -21,7 +22,7 @@ def create_user():
 
         return redirect(url_for('users'))
 
-    return render_template('create_user.html')
+    return render_template('users/create_user.html')
 
 # Read
 @app.route('/users')
@@ -38,6 +39,7 @@ def edit_user(username):
         # Update user data from the form
         user.username = request.form.get('username')
         user.email = request.form.get('email')
+        user.user_password = request.form.get('password')
         user.first_name = request.form.get('first_name')
         user.last_name = request.form.get('last_name')
 
@@ -46,7 +48,7 @@ def edit_user(username):
 
         return redirect(url_for('users'))
 
-    return render_template('edit_user.html', user=user)
+    return render_template('users/edit_user.html', user=user)
 
 # Delete
 @app.route('/users/delete/<string:username>')

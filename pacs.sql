@@ -10,7 +10,6 @@ CREATE TABLE user_address(
     state VARCHAR(15) NOT NULL,
     zip INT NOT NULL
 );
-
 -- CREATE USERS TABLE
 CREATE TABLE user(
 	username VARCHAR(20) PRIMARY KEY,

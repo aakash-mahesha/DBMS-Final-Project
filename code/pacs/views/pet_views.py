@@ -44,6 +44,8 @@ def get_pet_details(pet_id):
             print(pet)
             return pet
     except Exception as e:
+        if(db):
+            db.close()
         print(f"Error getting pet details: {e}")
     finally:
         db.close()
@@ -63,6 +65,8 @@ def get_schedule_list_per_pet(pet_id):
             return interactions_list
             
     except Exception as e:
+        if(db):
+            db.close()
         print(f"Error getting pet details: {e}")
     finally:
         db.close() 
@@ -91,6 +95,8 @@ def schedule_pet_interaction(username, pet_id, interaction_type, interaction_dat
             )
             db.commit()
     except Exception as e:
+        if(db):
+            db.close()
         print(f"Error scheduling pet interaction: {e}")
     finally:
         db.close()

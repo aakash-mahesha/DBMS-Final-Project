@@ -1,12 +1,11 @@
 from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/user_login', methods=['GET', 'POST'])
+def user_login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-
         try:
             db = connection()
             with db.cursor() as cursor:
@@ -20,19 +19,51 @@ def login():
                     return redirect(url_for('landing'))
                 else:
                     # Authentication failed
-                    return render_template('login.html', error="Invalid username or password")
+                    return render_template('user_login.html', error="Invalid username or password")
         except Exception as e:
+            if(db):
+                db.close()
             return f"Error: {e}"
         finally:
             db.close()
 
-    return render_template('login.html')
+    return render_template('user_login.html')
 
+@app.route('/agency_login', methods=['GET', 'POST'])
+def agency_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        try:
+            db = connection()
+            with db.cursor() as cursor:
+                sql = "SELECT * FROM animal_agency WHERE agency_name = %s"
+                cursor.execute(sql, (username,))
+                agency = cursor.fetchone()
+
+                if agency and agency['agency_password'] == password:
+                    # Authentication successful
+                    session['agency'] = agency
+                    return redirect(url_for('landing'))
+                else:
+                    # Authentication failed
+                    return render_template('agency_login.html', error="Invalid username or password")
+        except Exception as e:
+            if(db):
+                db.close()
+            return f"Error: {e}"
+        finally:
+            db.close()
+
+    return render_template('agency_login.html')
 
 @app.route('/logout')
 def logout():
     # Clear user-related information from the session
-    session.pop('user')
+    if session.get('user', None):
+        session.pop('user')
+    if session.get('agency', None):
+        session.pop('agency')
 
     # Redirect to the landing page or any other desired page after logout
     return redirect(url_for('landing'))

@@ -48,6 +48,7 @@ CREATE TABLE vet_hospital(
 -- CREATE ANIMAL AGENCY TABLE
 CREATE TABLE animal_agency(
 	agency_name VARCHAR(50) PRIMARY KEY,
+    agency_password VARCHAR(50) NOT NULL,
     agency_street_no VARCHAR(10) NOT NULL,
     agency_street_name VARCHAR(20) NOT NULL,
     agency_city VARCHAR(20) NOT NULL,
@@ -290,6 +291,7 @@ INSERT INTO vet_hospital (
 
 INSERT INTO animal_agency (
     agency_name,
+    agency_password,
     agency_street_no,
     agency_street_name,
     agency_city,
@@ -299,16 +301,16 @@ INSERT INTO animal_agency (
     agency_contact_last_name,
     agency_contact_number
 ) VALUES
-('Happy Paws Rescue', '123', 'Sunset Avenue', 'Sunsetville', 'California', '90210', 'Emily', 'Johnson', '5551234567'),
-('Wildlife Haven', '456', 'Forest Lane', 'Naturetown', 'Texas', '75001', 'Daniel', 'Smith', '5559876543'),
-('Feathered Friends Sanctuary', '789', 'Skyline Drive', 'Aviaryville', 'Florida', '33123', 'Isabella', 'Taylor', '5552345678'),
-('Critter Care Center', '101', 'Meadow Road', 'Woodland Hills', 'Colorado', '80302', 'Nicholas', 'Brown', '5558765432'),
-('Aquatic Wonders Rescue', '202', 'Coral Street', 'Seaside', 'Oregon', '97201', 'Hannah', 'Miller', '5553456789'),
-('Purrfect Companions', '303', 'Whisker Lane', 'Feline City', 'New York', '10001', 'Elijah', 'Clark', '5557654321'),
-('Scales and Tails Haven', '404', 'Reptile Road', 'Herpetopolis', 'Arizona', '85001', 'Grace', 'Garcia', '5552345679'),
-('Horse Haven Ranch', '505', 'Stable Drive', 'Equestrian Meadows', 'Kentucky', '40202', 'Oliver', 'Anderson', '5556543210'),
-('Bunny Bliss Shelter', '606', 'Bunny Lane', 'Rabbitville', 'Ohio', '44101', 'Sophie', 'Turner', '5554321098'),
-('Critter Cove Rescue', '707', 'Harbor View Road', 'Marine Haven', 'California', '92614', 'Lucas', 'White', '5558901234');
+('Happy Paws Rescue','HappyPaws123', '123', 'Sunset Avenue', 'Sunsetville', 'California', '90210', 'Emily', 'Johnson', '5551234567'),
+('Wildlife Haven', 'Wildlife456', '456', 'Forest Lane', 'Naturetown', 'Texas', '75001', 'Daniel', 'Smith', '5559876543'),
+('Feathered Friends Sanctuary', 'Feathered789', '789', 'Skyline Drive', 'Aviaryville', 'Florida', '33123', 'Isabella', 'Taylor', '5552345678'),
+('Critter Care Center', 'Critter101', '101', 'Meadow Road', 'Woodland Hills', 'Colorado', '80302', 'Nicholas', 'Brown', '5558765432'),
+('Aquatic Wonders Rescue', 'Aquatic202', '202', 'Coral Street', 'Seaside', 'Oregon', '97201', 'Hannah', 'Miller', '5553456789'),
+('Purrfect Companions','Purrfect303', '303', 'Whisker Lane', 'Feline City', 'New York', '10001', 'Elijah', 'Clark', '5557654321'),
+('Scales and Tails Haven','Scales404', '404', 'Reptile Road', 'Herpetopolis', 'Arizona', '85001', 'Grace', 'Garcia', '5552345679'),
+('Horse Haven Ranch', 'Horse505', '505','Stable Drive', 'Equestrian Meadows', 'Kentucky', '40202', 'Oliver', 'Anderson', '5556543210'),
+('Bunny Bliss Shelter', 'Bunny606', '606', 'Bunny Lane', 'Rabbitville', 'Ohio', '44101', 'Sophie', 'Turner', '5554321098'),
+('Critter Cove Rescue', 'Critter707', '707','Harbor View Road', 'Marine Haven', 'California', '92614', 'Lucas', 'White', '5558901234');
 
 
 -- AGENCY_PARTNERED_VET_HOSPITALS TABLE

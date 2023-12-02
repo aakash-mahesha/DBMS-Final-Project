@@ -1,15 +1,21 @@
 <nav>
     <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('welcome') }}">Welcome</a></li>
+        <li><a href="{{ url_for('landing') }}">Welcome</a></li>
         <!-- Add more links for other pages as needed -->
 
-        {% if current_user %}
-            <li>Hello, {{ current_user.username }}!</li>
+        {% if session['user'] %}
+            <li>Hello, {{ session['user'].get('username') }}!</li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
+
+        {% elif session['agency'] %}
+            <li>Welcome, {{ session['agency'].get('agency_name') }}</li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+
         {% else %}
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('user_login') }}">User Login</a></li>
+            <li><a href="{{ url_for('agency_login') }}">Agency Login</a></li>
+            <li><a href="{{ url_for('create_user') }}">Register User</a></li>
+            <li><a href="{{ url_for('create_agency') }}">Register Agency</a></li>
         {% endif %}
     </ul>
 </nav>

@@ -39,7 +39,7 @@ def users():
             cursor.execute(sql)
             result = cursor.fetchall()
             print(result)
-            return render_template('users.html', users=result)
+            return render_template('users/users.html', users=result)
     except Exception as e:
         return f"Error: {e}"
     finally:
@@ -48,7 +48,6 @@ def users():
 # Update
 @app.route('/users/edit/<string:username>', methods=['GET', 'POST'])
 def edit_user(username):
-    print("entered here: Username: ", username)
     try:
         db = connection()
         with db.cursor() as cursor:

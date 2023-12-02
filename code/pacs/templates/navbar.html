@@ -1,0 +1,15 @@
+<nav>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('welcome') }}">Welcome</a></li>
+        <!-- Add more links for other pages as needed -->
+
+        {% if current_user %}
+            <li>Hello, {{ current_user.username }}!</li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>

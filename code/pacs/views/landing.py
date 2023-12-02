@@ -12,4 +12,4 @@ def landing():
         last_name = session['user'].get('last_name',None)
 
         print(username, first_name,last_name)
-    return render_template('base.html', username = username,first_name = first_name,last_name = last_name)
+    return render_template('welcome.html', username = username, first_name = first_name, last_name = last_name)

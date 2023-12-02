@@ -1,0 +1,68 @@
+<!-- Display pet details and provide actions for the user -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pet.name }} Details</title>
+</head>
+<body>
+   
+<h2>{{ pet.name }} Details</h2>
+
+<p>Photo: <img src="{{ pet.photo }}" alt="{{ pet.name }} Photo"></p>
+
+{% if username %}
+    
+    <h3>Scheduled Interactions for {{ pet.pet_name }}</h3>
+    {% if user_interaction_list %}
+        <ul>
+            {% for interaction in user_interaction_list %}
+                <li>{{ interaction[0] }} - {{ interaction[1] }} to {{ interaction[2] }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No scheduled interactions for {{ pet.pet_name }}.</p>
+    {% endif %}
+
+    {% if schedule_already_present_error %}
+        {{schedule_already_present_error}}
+    {% endif %}
+
+    <!-- Add your form for scheduling visits here -->
+    <form method="post" action="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
+        <label for="visit_date">Visit Date:</label>
+        <input type="date" id="visit_date" name="visit_date" required>
+
+        <br>
+
+        <label for="start_time">Start Time:</label>
+        <input type="time" id="start_time" name="start_time" required>
+
+        <br>
+
+        <label for="end_time">End Time:</label>
+        <input type="time" id="end_time" name="end_time" required>
+
+        <br>
+
+        <label for="visit_type">Visit Type:</label>
+        <select id="visit_type" name="visit_type" required>
+            <option value="play">Play</option>
+            <option value="feed">Feed</option>
+            <option value="walk">Walk</option>
+            <!-- Add more visit types as needed -->
+        </select>
+
+        <br>
+
+        <button type="submit">Schedule Visit</button>
+    </form>
+{% else %}
+    <p>Please log in to schedule a visit.</p>
+{% endif %}
+
+<!-- Implement form for scheduling visits, commenting, adopting, etc. -->
+
+</body>
+</html>

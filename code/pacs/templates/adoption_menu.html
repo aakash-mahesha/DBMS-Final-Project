@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoption Menu</title>
+    <style>
+        /* Add some styling to the container */
+        .pet-container {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pet-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Adoption Menu</h2>
+
+<p>Welcome, User {{ username }}!</p>
+
+{% for pet in pets %}
+    <div class="pet-container">
+        <img class="pet-image" src="{{ pet.photo }}" alt="{{ pet.name }}">
+        <p>{{ pet.name }}</p>
+        <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
+            <button>View Details</button>
+        </a>
+    </div>
+{% endfor %}
+
+</body>
+</html>

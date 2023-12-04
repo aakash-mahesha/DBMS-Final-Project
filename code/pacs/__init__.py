@@ -15,4 +15,4 @@ def connection():
                     cursorclass=pymysql.cursors.DictCursor)
     return db
 
-from pacs.views import landing, pet_views, user_views,login_views,user_menu_view,pet_views,interaction_views, agency_views
+from pacs.views import landing, pet_views, user_views,login_views,user_menu_view,pet_views,interaction_views,agency_views,comment_views

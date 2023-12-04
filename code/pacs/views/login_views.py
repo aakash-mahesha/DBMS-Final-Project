@@ -16,7 +16,7 @@ def user_login():
                 if user and user['user_password'] == password:
                     # Authentication successful
                     session['user'] = user
-                    return redirect(url_for('landing'))
+                    return redirect(url_for('adoption_menu'))
                 else:
                     # Authentication failed
                     return render_template('user_login.html', error="Invalid username or password")

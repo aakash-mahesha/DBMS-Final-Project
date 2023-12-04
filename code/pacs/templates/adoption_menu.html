@@ -26,8 +26,9 @@
 
 {% for pet in pets %}
     <div class="pet-container">
-        <img class="pet-image" src="{{ pet.photo }}" alt="{{ pet.name }}">
-        <p>{{ pet.name }}</p>
+        <img class="pet-image" src="{{ pet.image_link }}" alt="{{ pet.pet_name }}">
+        <p>{{ pet.pet_name }}</p>
+        <p>{{ pet.breed_name}}</p>
         <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
             <button>View Details</button>
         </a>

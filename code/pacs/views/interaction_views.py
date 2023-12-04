@@ -34,13 +34,15 @@ def get_interaction_details(interaction_id):
     try:
         db = connection()
         with db.cursor() as cursor:
-            sql = "SELECT * FROM user_pet_interactions WHERE interaction_id = %s"
-            cursor.execute(sql,(interaction_id,))
-            interaction = cursor.fetchone()
-            return interaction
-        
+            # Call the stored procedure to get interaction details by interaction_id
+            cursor.callproc('get_interaction_details_by_id', (interaction_id,))
+            
+            # Fetch the result
+            result = cursor.fetchone()
+            return result
+
     except Exception as e:
-        print(f"Error getting interaction: {e}")
+        print(f"Error getting interaction details: {e}")
     finally:
         db.close()
 
@@ -49,14 +51,9 @@ def update_interaction_details(interaction_id, new_visit_date, new_start_time, n
     try:
         db = connection()
         with db.cursor() as cursor:
-            # Update interaction details in the 'user_pet_interactions' table
-            sql = """
-                UPDATE user_pet_interactions
-                SET interaction_date = %s, interaction_start_time = %s, interaction_end_time = %s, interaction_type = %s
-                WHERE interaction_id = %s
-            """
-            cursor.execute(sql, (new_visit_date, new_start_time, new_end_time, new_visit_type, interaction_id))
-            print('updated')
+            # Call the stored procedure to update interaction details by interaction_id
+            cursor.callproc('update_interaction_details', (interaction_id, new_visit_date, new_start_time, new_end_time, new_visit_type))
+            
             db.commit()
     except Exception as e:
         print(f"Error updating interaction details: {e}")
@@ -74,38 +71,22 @@ def delete_interaction(interaction_id):
 
         # Redirect to a page showing all scheduled interactions
         # return redirect(url_for('scheduled_interactions'))
-        return redirect(url_for('landing'))
+        return redirect(url_for('adoption_menu'))
     else:
         # Redirect to login if the user is not logged in
         # return redirect(url_for('scheduled_interactions'))
-        return redirect(url_for('landing'))
+        return redirect(url_for('login'))
 
 def delete_interaction_from_database(interaction_id):
     try:
         db = connection()
         with db.cursor() as cursor:
-            # delete an interaction details in the from user_pet_interactions table
-            sql = "DELETE FROM user_pet_interactions WHERE interaction_id = %s"
-            cursor.execute(sql, (interaction_id,))
+            # Call the stored procedure to delete an interaction by interaction_id
+            cursor.callproc('delete_interaction_by_id', (interaction_id,))
+            
             db.commit()
             print('deleted')
-            
     except Exception as e:
         print(f"Error deleting interaction details: {e}")
     finally:
         db.close()
-    
-# # View for Displaying All Scheduled Interactions
-# @app.route('/adoption/pet/scheduled_interactions')
-# def scheduled_interactions():
-#     # Check if a user is logged in
-#     if 'user' in session:
-#         username = session['user']['username']
-
-#         # Fetch all scheduled interactions for the user from the database
-#         interactions = get_all_user_interactions(username)
-
-#         return render_template('/pets/scheduled_interactions.html', username=username, interactions=interactions)
-#     else:
-#         # Redirect to login if the user is not logged in
-#         return redirect(url_for('login'))

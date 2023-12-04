@@ -4,17 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ pet.name }} Details</title>
+    <title>{{ pet.pet_name }} Details</title>
 </head>
 <body>
    
-<h2>{{ pet.name }} Details</h2>
+<h2>{{ pet.pet_name }} Details</h2>
 
-<p>Photo: <img src="{{ pet.photo }}" alt="{{ pet.name }} Photo"></p>
+<!-- Display pet information -->
+<p>Photo: <img src="{{ pet.photo }}" alt="{{ pet.pet_name }} Photo"></p>
+<p>Type: {{ pet.pet_type }}</p>
+<p>Age: {{ pet.age }}</p>
+<p>Height: {{ pet.height }}</p>
+<p>Weight: {{ pet.weight }}</p>
+<p>Color: {{ pet.color }}</p>
+<p>Breed: {{ pet.breed_name }}</p>
+
+<!-- Display doctor visit details -->
+<h3>Latest Doctor Visit</h3>
+{% if latest_doctor_visit %}
+    <p>Date: {{ latest_doctor_visit.visit_date }}</p>
+    <p>Diagnosis: {{ latest_doctor_visit.diagnosis }}</p>
+    <p>Medications: {{ latest_doctor_visit.medications }}</p>
+    <p>Health Level: {{ latest_doctor_visit.health_level }}</p>
+    <p>Doctor: {{ latest_doctor_visit.doctor_name }}</p>
+    <p>Hospital: {{ latest_doctor_visit.hospital_name }}</p>
+{% else %}
+    <p>No doctor visits recorded for {{ pet.pet_name }}.</p>
+{% endif %}
+
+<!-- Display pet pictures -->
+<h3>Pet Pictures</h3>
+{% if pet_images %}
+    <ul>
+        {% for image in pet_images %}
+            <li><img src="{{ image }}" alt="Pet Image"></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No pictures available for {{ pet.pet_name }}.</p>
+{% endif %}
+
+<!-- Display comments section -->
+<h3>Comments</h3>
+{% if pet_comments %}
+    <ul>
+        {% for comment in pet_comments %}
+            <li>{{ comment.username }} - {{ comment.comment_date }}: {{ comment.comment_text }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No comments available for {{ pet.pet_name }}.</p>
+{% endif %}
 
 {% if username %}
-    
-    <h3>Scheduled Interactions for {{ pet.pet_name }}</h3>
+ <!-- Add your form for posting comments here -->
+ <form method="post" action="{{ url_for('add_comment', pet_id=pet.pet_id) }}" id="commentForm">
+    <label for="comment_text">Add Comment:</label>
+    <textarea id="comment_text" name="comment_text" rows="4" required></textarea>
+    <br>
+    <button type="submit">Post Comment</button>
+</form>
+{% else %}
+<p>Please log in to schedule a visit or post a comment.</p>
+{% endif %}
+
+
+<!-- Implement form for scheduling visits, commenting, adopting, etc. -->
+
+<h3>Scheduled Interactions for {{ pet.pet_name }}</h3>
     {% if user_interaction_list %}
         <ul>
             {% for interaction in user_interaction_list %}
@@ -29,8 +86,9 @@
         {{schedule_already_present_error}}
     {% endif %}
 
-    <!-- Add your form for scheduling visits here -->
-    <form method="post" action="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
+<!-- Add your form for scheduling visits here -->
+{% if username %}
+    <form method="post" action="{{ url_for('pet_details', pet_id=pet.pet_id) }}" id = 'visitForm'>
         <label for="visit_date">Visit Date:</label>
         <input type="date" id="visit_date" name="visit_date" required>
 
@@ -50,7 +108,7 @@
         <select id="visit_type" name="visit_type" required>
             <option value="play">Play</option>
             <option value="feed">Feed</option>
-            <option value="walk">Walk</option>
+            <option value="pet">Pet</option>
             <!-- Add more visit types as needed -->
         </select>
 
@@ -59,10 +117,20 @@
         <button type="submit">Schedule Visit</button>
     </form>
 {% else %}
-    <p>Please log in to schedule a visit.</p>
+    <p>Please log in to schedule a visit or post a comment.</p>
 {% endif %}
 
-<!-- Implement form for scheduling visits, commenting, adopting, etc. -->
+    <script>
+        function clearVisitForm() {
+            // Reset the form fields
+            document.getElementById('visitForm').reset();
+        }
+
+        function clearCommentForm() {
+            document.getElementById('commentForm').reset();
+        }
+    </script>
 
 </body>
 </html>
+

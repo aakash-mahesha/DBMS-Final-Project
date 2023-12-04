@@ -64,13 +64,10 @@ def get_pet_details(pet_id):
     
 
 def get_schedule_list_per_pet(pet_id):
-    print('in get_schedule_list_per_pet')
-
     try:
         db = connection()
         with db.cursor() as cursor:
-            sql = "SELECT * FROM user_pet_interactions WHERE pet_id = %s and username = %s"
-            cursor.execute(sql, (int(pet_id),session['user']['username']))
+            cursor.callproc('get_schedule_list_per_pet', (int(pet_id), session['user']['username']))
             interactions = cursor.fetchall()
             interactions_list = []
             for interaction in interactions:
@@ -78,8 +75,6 @@ def get_schedule_list_per_pet(pet_id):
             return interactions_list
             
     except Exception as e:
-        if(db):
-            db.close()
         print(f"Error getting pet details: {e}")
     finally:
         db.close() 

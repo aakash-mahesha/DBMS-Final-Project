@@ -25,7 +25,7 @@ def create_user():
         finally:
             db.close()
 
-        return redirect(url_for('users'))
+        return redirect(url_for('user_login'))
 
     return render_template('users/create_user.html')
 

@@ -94,18 +94,3 @@ def delete_interaction_from_database(interaction_id):
         print(f"Error deleting interaction details: {e}")
     finally:
         db.close()
-    
-# # View for Displaying All Scheduled Interactions
-# @app.route('/adoption/pet/scheduled_interactions')
-# def scheduled_interactions():
-#     # Check if a user is logged in
-#     if 'user' in session:
-#         username = session['user']['username']
-
-#         # Fetch all scheduled interactions for the user from the database
-#         interactions = get_all_user_interactions(username)
-
-#         return render_template('/pets/scheduled_interactions.html', username=username, interactions=interactions)
-#     else:
-#         # Redirect to login if the user is not logged in
-#         return redirect(url_for('login'))

@@ -5,6 +5,7 @@ from flask_session import Session
 app = Flask(__name__)
 app.secret_key = 'pacs_dbms'
 app.config['SESSION_TYPE'] = 'filesystem'
+
 Session(app)
 def connection():
     db = pymysql.connect(host=Config.MYSQL_HOST,

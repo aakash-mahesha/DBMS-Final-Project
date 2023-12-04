@@ -78,8 +78,6 @@ def edit_agency(agency_name):
             first_name = request.form.get('first_name')
             last_name = request.form.get('last_name')
             contact = request.form.get('contact')
-
-            print("&&&&&^^^^^^^^^^",agency_name)
             # Commit the changes to the database
             with db.cursor() as cursor:
                 sql = "UPDATE animal_agency SET agency_name = %s, agency_password = %s, agency_street_no = %s, agency_street_name = %s, agency_city = %s, agency_state = %s, agency_zip = %s, agency_contact_first_name = %s, agency_contact_last_name = %s, agency_contact_number = %s WHERE agency_name = %s"
@@ -109,6 +107,3 @@ def delete_agency(agency_name):
         db.close()
 
     return redirect(url_for('agency'))
-
-
-# (TODO) Add more functions/queries here. Decide whether to have methods in the db or here.

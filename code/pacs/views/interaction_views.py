@@ -71,11 +71,11 @@ def delete_interaction(interaction_id):
 
         # Redirect to a page showing all scheduled interactions
         # return redirect(url_for('scheduled_interactions'))
-        return redirect(url_for('landing'))
+        return redirect(url_for('adoption_menu'))
     else:
         # Redirect to login if the user is not logged in
         # return redirect(url_for('scheduled_interactions'))
-        return redirect(url_for('landing'))
+        return redirect(url_for('login'))
 
 def delete_interaction_from_database(interaction_id):
     try:

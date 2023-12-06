@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Visit Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<form id="doctorVisitForm" method="post" action="{{url_for('doctor_visit_form',agency_name = agency_name,pet_id = pet_id)}}">
+    <label for="hospital">Select Hospital:</label>
+    <select id="hospital" name="hospital">
+        <option value="">Select Hospital</option> 
+        {% for hospital in hospitals %}
+            <option value="{{ hospital }}">{{ hospital }}</option>
+        {% endfor %}
+    </select>
+
+    <br>
+
+    <label for="doctor">Select Doctor:</label>
+    <select id="doctor" name="doctor" required>
+        <!-- Doctors will be dynamically added here based on the selected hospital -->
+    </select>
+
+    <br>
+
+    <label for="visit_date">Visit Date:</label>
+    <input type="date" id="visit_date" name="visit_date" required>
+
+    <br>
+
+    <label for="diagnosis">Diagnosis:</label>
+    <input type="textbox" id="diagnosis" name="diagnosis" required>
+
+    <br>
+
+    <label for="medications">Medications:</label>
+    <input type="text" id="medications" name="medications" required>
+
+    <br>
+
+    <label for="health_level">Health Level:</label>
+    <select id="health_level" name="health_level" required>
+        <option value="Great">Great</option>
+        <option value="Good">Good</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Need Care">Need Care</option>
+    </select>
+
+    <br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $("#hospital").change(function() {
+            var selectedHospital = $(this).val();
+
+            $.ajax({
+                url: "/get_doctors",
+                type: "POST",
+                data: {hospital: selectedHospital},
+                success: function(data) {
+                    $("#doctor").empty();
+                    $.each(data, function(index, doctor) {
+                        // Combine first and last name for display
+                        var fullName = doctor.doctor_first_name + ' ' + doctor.doctor_last_name;
+                        console.log(fullName,doctor.doctor_id)
+                        // Append option with doctor_id as value and fullName as text
+                        $("#doctor").append('<option value="' + doctor.doctor_id + '">' + fullName + '</option>');
+                    });
+                },
+                error: function(error) {
+                    console.log("Error fetching doctors: " + error);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

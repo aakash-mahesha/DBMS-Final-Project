@@ -2,8 +2,8 @@ from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 
 # View for Editing Interaction
-@app.route('/adoption/pet/edit_interaction/<int:interaction_id>', methods=['GET', 'POST'])
-def edit_interaction(interaction_id):
+@app.route('/pet/<int:pet_id>/edit_interaction/<int:interaction_id>', methods=['GET', 'POST'])
+def edit_interaction(pet_id,interaction_id):
     # Check if a user is logged in
     if 'user' in session:
         # Fetch interaction details from the database
@@ -22,9 +22,9 @@ def edit_interaction(interaction_id):
             # Redirect to a page showing all scheduled interactions
             
             # return redirect(url_for('scheduled_interactions'))
-            return redirect(url_for('edit_interaction',interaction_id = interaction_id))
+            return redirect(url_for('pet_details',pet_id = pet_id))
 
-        return render_template('edit_interaction.html', interaction=interaction)
+        return render_template('edit_interaction.html',pet_id = pet_id,interaction=interaction)
     else:
         # Redirect to login if the user is not logged in
         return redirect(url_for('login'))
@@ -62,8 +62,8 @@ def update_interaction_details(interaction_id, new_visit_date, new_start_time, n
 
 
 # View for Deleting Interaction
-@app.route('/adoption/pet/delete_interaction/<int:interaction_id>')
-def delete_interaction(interaction_id):
+@app.route('/adoption/pet/<int:pet_id>/delete_interaction/<int:interaction_id>')
+def delete_interaction(pet_id,interaction_id):
     # Check if a user is logged in
     if 'user' in session:
         # Implement your logic to delete the interaction from the database
@@ -71,7 +71,7 @@ def delete_interaction(interaction_id):
 
         # Redirect to a page showing all scheduled interactions
         # return redirect(url_for('scheduled_interactions'))
-        return redirect(url_for('adoption_menu'))
+        return redirect(url_for('pet_details',pet_id = pet_id))
     else:
         # Redirect to login if the user is not logged in
         # return redirect(url_for('scheduled_interactions'))

@@ -2,10 +2,11 @@ from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 
 # Delete Comment View
-@app.route('/adoption/pet/<int:pet_id>/delete_comment/<int:comment_id>')
+@app.route('/adoption/pet/<int:pet_id>/delete_comment/<int:comment_id>', methods=['GET', 'POST'])
 def delete_comment(pet_id, comment_id):
     if 'user' in session:
         # Delete the comment from the database
+        print(comment_id)
         delete_comment_from_database(comment_id)
 
         return redirect(url_for('pet_details', pet_id=pet_id))

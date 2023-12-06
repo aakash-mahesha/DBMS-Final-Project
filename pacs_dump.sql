@@ -221,7 +221,7 @@ CREATE TABLE `pet_visit_doctor` (
   KEY `doctor_fk` (`doctor_id`),
   CONSTRAINT `doctor_fk` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `doctor_visit_pet_id_fk` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`pet_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +230,7 @@ CREATE TABLE `pet_visit_doctor` (
 
 LOCK TABLES `pet_visit_doctor` WRITE;
 /*!40000 ALTER TABLE `pet_visit_doctor` DISABLE KEYS */;
-INSERT INTO `pet_visit_doctor` VALUES (1,'D001',1,'2023-01-10','Routine checkup, all parameters normal','None','Great'),(2,'D002',2,'2023-01-15','Minor cough and sneezing','Prescribed antibiotics','Good'),(1,'D001',3,'2023-02-05','Limping on right hind leg','Prescribed pain relievers','Moderate'),(2,'D002',4,'2023-02-12','Healthy and active','None','Great'),(3,'D001',5,'2023-03-20','Feathers appear dull, possible nutrient deficiency','Prescribed avian supplement','Moderate'),(4,'D002',6,'2023-04-02','Small wound on tail, cleaned and bandaged','Prescribed topical ointment','Good');
+INSERT INTO `pet_visit_doctor` VALUES (1,'D001',1,'2023-01-10','Routine checkup, all parameters normal','None','Great'),(2,'D002',2,'2023-01-15','Minor cough and sneezing','Prescribed antibiotics','Good'),(1,'D001',3,'2023-02-05','Limping on right hind leg','Prescribed pain relievers','Moderate'),(2,'D002',4,'2023-02-12','Healthy and active','None','Great'),(3,'D001',5,'2023-03-20','Feathers appear dull, possible nutrient deficiency','Prescribed avian supplement','Moderate'),(4,'D002',6,'2023-04-02','Small wound on tail, cleaned and bandaged','Prescribed topical ointment','Good'),(1,'D002',7,'2023-12-20','Everything\'s Perfect ','No Medication Needed','Great');
 /*!40000 ALTER TABLE `pet_visit_doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +310,7 @@ CREATE TABLE `user_comment_pets` (
   KEY `user_fk` (`username`),
   CONSTRAINT `pet_id_fk` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`pet_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +343,7 @@ CREATE TABLE `user_pet_interactions` (
   KEY `interaction_user_fk` (`username`),
   CONSTRAINT `interaction_pet_id_fk` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`pet_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `interaction_user_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +352,7 @@ CREATE TABLE `user_pet_interactions` (
 
 LOCK TABLES `user_pet_interactions` WRITE;
 /*!40000 ALTER TABLE `user_pet_interactions` DISABLE KEYS */;
-INSERT INTO `user_pet_interactions` VALUES ('john_doe',1,1,'Play','2023-01-20','10:00:00','10:30:00'),('alice_smith',2,2,'Feed','2023-01-21','12:45:00','13:15:00'),('mike_brown',4,4,'Play','2023-01-23','11:00:00','11:30:00'),('sara_miller',5,5,'Feed','2023-01-24','09:30:00','10:00:00'),('john_doe',1,6,'Pet','2023-01-25','14:00:00','14:30:00'),('alice_smith',2,7,'Play','2023-01-26','16:30:00','17:00:00'),('emma_white',3,8,'Feed','2023-01-27','12:00:00','12:30:00'),('mike_brown',4,9,'Pet','2023-01-28','13:45:00','14:15:00'),('sara_miller',5,10,'Play','2023-01-29','10:30:00','11:00:00'),('Akm2',1,11,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,12,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,13,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,14,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',3,15,'Play','2023-12-26','16:56:00','16:56:00'),('Akm2',4,16,'Play','2023-12-26','03:56:00','05:58:00');
+INSERT INTO `user_pet_interactions` VALUES ('john_doe',1,1,'Play','2023-01-20','10:00:00','10:30:00'),('alice_smith',2,2,'Feed','2023-01-21','12:45:00','13:15:00'),('mike_brown',4,4,'Play','2023-01-23','11:00:00','11:30:00'),('sara_miller',5,5,'Feed','2023-01-24','09:30:00','10:00:00'),('john_doe',1,6,'Pet','2023-01-25','14:00:00','14:30:00'),('alice_smith',2,7,'Play','2023-01-26','16:30:00','17:00:00'),('emma_white',3,8,'Feed','2023-01-27','12:00:00','12:30:00'),('mike_brown',4,9,'Pet','2023-01-28','13:45:00','14:15:00'),('sara_miller',5,10,'Play','2023-01-29','10:30:00','11:00:00'),('Akm2',1,11,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,12,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,13,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,14,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',4,16,'Play','2023-12-26','03:56:00','05:58:00');
 /*!40000 ALTER TABLE `user_pet_interactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,6 +500,48 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_doctors_by_hospital` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_doctors_by_hospital`(IN hospital_name VARCHAR(50))
+BEGIN
+    SELECT doctor_id,doctor_first_name, doctor_last_name
+    FROM doctor
+    WHERE works_at_hospital_name = hospital_name;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_hospitals_by_agency` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_hospitals_by_agency`(IN agencyName VARCHAR(50))
+BEGIN
+    SELECT hospital_name
+    FROM agency_partnered_vet_hospitals
+    WHERE agency_name = agencyName;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_interaction_details_by_id` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -615,7 +657,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_list_per_pet`(
 BEGIN
     SELECT *
     FROM user_pet_interactions
-    WHERE pet_id = in_pet_id AND username = in_username;
+    WHERE pet_id = in_pet_id;
     
 END ;;
 DELIMITER ;
@@ -635,7 +677,47 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_comments_for_pet`(IN pet_id_param INT)
 BEGIN
-    SELECT username, comment_text, comment_date FROM user_comment_pets WHERE pet_id = pet_id_param ORDER BY comment_date DESC;
+    SELECT username, comment_id, comment_text, comment_date FROM user_comment_pets WHERE pet_id = pet_id_param ORDER BY comment_date DESC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_pet_visit_doctor` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_pet_visit_doctor`(
+    IN p_pet_id INT,
+    IN p_doctor_id VARCHAR(10),
+    IN p_visit_date DATE,
+    IN p_diagnosis VARCHAR(100),
+    IN p_medications VARCHAR(50),
+    IN p_health_level ENUM('Great','Good','Moderate','Need Care')
+)
+BEGIN
+    INSERT INTO pet_visit_doctor (
+        pet_id,
+        doctor_id,
+        visit_date,
+        diagnosis,
+        medications,
+        health_level
+    ) VALUES (
+        p_pet_id,
+        p_doctor_id,
+        p_visit_date,
+        p_diagnosis,
+        p_medications,
+        p_health_level
+    );
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -710,6 +792,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-
-
--- Dump completed on 2023-12-04  2:43:50
+-- Dump completed on 2023-12-06  0:28:07

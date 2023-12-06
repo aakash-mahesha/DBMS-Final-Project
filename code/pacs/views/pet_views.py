@@ -10,8 +10,8 @@ def pet_details(pet_id):
     # Check if a user is logged in
     if 'user' in session:
         username = session['user']['username']
-        pet_details, pet_images , pet_comments = get_pet_details(pet_id)
-           
+        pet_details, pet_images , pet_comments, latest_doctor_visit = get_pet_details(pet_id)
+        print(latest_doctor_visit)
         # Fetch pet details from the database
         print(pet_details, pet_images)
         if request.method == 'POST':
@@ -27,10 +27,12 @@ def pet_details(pet_id):
 
        
         interaction_list = get_schedule_list_per_pet(pet_id)
+        print(interaction_list)
         return render_template('/pets/pet_details.html', username=username, 
                                pet=pet_details[0],pet_images = pet_images, 
                                user_interaction_list = interaction_list,
-                               pet_comments = pet_comments)
+                               pet_comments = pet_comments,
+                               latest_doctor_visit = latest_doctor_visit)
     else:
         # Redirect to login if the user is not logged in
         return redirect(url_for('login'))
@@ -49,10 +51,13 @@ def get_pet_details(pet_id):
             cursor.callproc('get_pet_images_links', (pet_id,))
             pet_images = cursor.fetchall()
 
+            cursor.callproc('get_recent_pet_doctor_visit',(pet_id,))
+            latest_doctor_visit = cursor.fetchone()
+
             cursor.callproc('get_user_comments_for_pet',(pet_id,))
             pet_comments = cursor.fetchall()
-
-            return (pet_data, pet_images, pet_comments)
+            
+            return (pet_data, pet_images, pet_comments,latest_doctor_visit)
         
     except Exception as e:
         print(f"Error getting pet details, images, and pet_comments: {e}")
@@ -71,7 +76,7 @@ def get_schedule_list_per_pet(pet_id):
             interactions = cursor.fetchall()
             interactions_list = []
             for interaction in interactions:
-                interactions_list.append((dt.date.strftime(interaction['interaction_date'],"%m-%d-%Y"), ":".join(str(interaction['interaction_start_time']).split(":")[0:2]),":".join(str(interaction['interaction_end_time']).split(":")[0:2])))
+                interactions_list.append((dt.date.strftime(interaction['interaction_date'],"%m-%d-%Y"), ":".join(str(interaction['interaction_start_time']).split(":")[0:2]),":".join(str(interaction['interaction_end_time']).split(":")[0:2]),interaction['username'],interaction['interaction_type'],interaction['interaction_id']))
             return interactions_list
             
     except Exception as e:

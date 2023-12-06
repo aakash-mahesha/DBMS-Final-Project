@@ -1,0 +1,53 @@
+<!-- templates/pet_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Details Form</title>
+</head>
+<body>
+    <h1>Enter Pet Details</h1>
+    <form action="/add_pet" method="post">
+        <label for="pet_name">Pet Name:</label>
+        <input type="text" id="pet_name" name="pet_name" required><br>
+
+        <label for="pet_type">Pet Type:</label>
+        <select id="pet_type" name="pet_type" required>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            <option value="Rodents">Rodents</option>
+        </select><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <label for="height">Height (in inches):</label>
+        <input type="number" id="height" name="height" required><br>
+
+        <label for="weight">Weight (in pounds):</label>
+        <input type="number" id="weight" name="weight" required><br>
+
+        <label for="color">Color:</label>
+        <input type="text" id="color" name="color" required><br>
+
+        <label for="breed_name">Breed Name:</label>
+        <input type="text" id="breed_name" name="breed_name"><br>
+
+        <label for="adopted">Adopted:</label>
+        <input type="checkbox" id="adopted" name="adopted" value="1"><br>
+
+        <label for="adopted_by">Adopted By:</label>
+        <input type="text" id="adopted_by" name="adopted_by"><br>
+
+        <label for="adoption_date">Adoption Date:</label>
+        <input type="date" id="adoption_date" name="adoption_date"><br>
+
+        <label for="provided_by_agency">Provided By Agency:</label>
+        <input type="text" id="provided_by_agency" name="provided_by_agency"><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

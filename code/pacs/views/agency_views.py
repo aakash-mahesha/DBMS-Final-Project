@@ -1,5 +1,6 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
+from pacs.views.pet_views import get_pet_details
 
 # Create
 @app.route('/agency/create', methods=['GET', 'POST'])
@@ -107,3 +108,59 @@ def delete_agency(agency_name):
         db.close()
 
     return redirect(url_for('agency'))
+
+@app.route('/agency/pets')
+def get_agency_pets():
+    if session['agency']:
+        agency_name = session['agency']['agency_name']
+        print("agency name", agency_name)
+        print("Found agency and session")
+    else:
+        return render_template('welcome.html')
+    try:
+        db = connection()
+        with db.cursor() as cursor:
+            cursor.callproc('get_pets_for_agency', (agency_name,))
+            pet_data = cursor.fetchall()
+            pet_deets = []
+            if(len(pet_data) > 0):
+                for pet in pet_data:
+                    pet_id = pet.get('pet_id')
+                    pet_details = get_pet_details(pet_id)
+                    pet_deets.append(pet_details)
+                    print(pet_details)
+            
+        return render_template('pets/agency_pet_list.html', pets=pet_data)
+
+    except Exception as e:
+        return f"Error: {e}"
+    finally:
+        db.close()
+
+@app.route('/agency/pets/add')
+def get_agency_pets():
+    if session['agency']:
+        agency_name = session['agency']['agency_name']
+        print("agency name", agency_name)
+        print("Found agency and session")
+    else:
+        return render_template('welcome.html')
+    try:
+        db = connection()
+        with db.cursor() as cursor:
+            cursor.callproc('get_pets_for_agency', (agency_name,))
+            pet_data = cursor.fetchall()
+            pet_deets = []
+            if(len(pet_data) > 0):
+                for pet in pet_data:
+                    pet_id = pet.get('pet_id')
+                    pet_details = get_pet_details(pet_id)
+                    pet_deets.append(pet_details)
+                    print(pet_details)
+            
+        return render_template('pets/agency_pet_list.html', pets=pet_data)
+
+    except Exception as e:
+        return f"Error: {e}"
+    finally:
+        db.close()

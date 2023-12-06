@@ -1,6 +1,9 @@
 from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 from pacs.views.pet_views import get_pet_details
+from pacs.utils.upload_file import upload_to_s3
+from time import time
+from random import randint
 
 # Create
 @app.route('/agency/create', methods=['GET', 'POST'])
@@ -17,7 +20,7 @@ def create_agency():
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         contact = request.form.get('contact')
-        print(request.form)
+        # print(request.form)
 
         # Create a new user instance
         try:
@@ -64,8 +67,8 @@ def edit_agency(agency_name):
             agency = cursor.fetchone()
             print("Agency found: ", agency)
 
-        print("request method", request.method)
-        print("form:", request.form)
+        # print("request method", request.method)
+        # print("form:", request.form)
         if request.method == 'POST':
             # Update user data from the form
             print("FORM:******", request.form)
@@ -128,7 +131,7 @@ def get_agency_pets():
                     pet_id = pet.get('pet_id')
                     pet_details = get_pet_details(pet_id)
                     pet_deets.append(pet_details)
-                    print(pet_details)
+                    # print(pet_details)
             
         return render_template('pets/agency_pet_list.html', pets=pet_data)
 
@@ -155,7 +158,13 @@ def add_agency_pet():
         adopted = request.form.get('adopted', False)
         adopted_by = request.form.get('adopted_by')
         adoption_date = request.form.get('adoption_date', 'null')
-        print(request.form)
+        print("req files", request.files)
+        if 'images' in request.files:
+            # print("got images ********", request.files.getlist())
+            images = request.files.getlist('images')
+            for image in enumerate(images):
+                uploaded_url = upload_to_s3(image, 'pacs-dbms-neu', str(randint(2,100)*time())+".jpg")
+
         if adopted == False:
             adopted_by = None
             adoption_date = None

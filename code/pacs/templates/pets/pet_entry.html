@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Enter Pet Details</h1>
-    <form action="/add_pet" method="post">
+    <form action="{{ url_for('add_agency_pet') }}" method="post">
         <label for="pet_name">Pet Name:</label>
         <input type="text" id="pet_name" name="pet_name" required><br>
 
@@ -36,7 +36,7 @@
         <input type="text" id="breed_name" name="breed_name"><br>
 
         <label for="adopted">Adopted:</label>
-        <input type="checkbox" id="adopted" name="adopted" value="1"><br>
+        <input type="checkbox" id="adopted" name="adopted"><br>
 
         <label for="adopted_by">Adopted By:</label>
         <input type="text" id="adopted_by" name="adopted_by"><br>
@@ -44,8 +44,12 @@
         <label for="adoption_date">Adoption Date:</label>
         <input type="date" id="adoption_date" name="adoption_date"><br>
 
+        {% if not session['agency'] %}
         <label for="provided_by_agency">Provided By Agency:</label>
         <input type="text" id="provided_by_agency" name="provided_by_agency"><br>
+        {% else %}
+
+        {% endif %}
 
         <button type="submit">Submit</button>
     </form>

@@ -21,8 +21,6 @@ def user_login():
                     # Authentication failed
                     return render_template('user_login.html', error="Invalid username or password")
         except Exception as e:
-            if(db):
-                db.close()
             return f"Error: {e}"
         finally:
             db.close()
@@ -49,8 +47,6 @@ def agency_login():
                     # Authentication failed
                     return render_template('agency_login.html', error="Invalid username or password")
         except Exception as e:
-            if(db):
-                db.close()
             return f"Error: {e}"
         finally:
             db.close()

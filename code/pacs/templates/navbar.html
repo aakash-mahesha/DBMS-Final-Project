@@ -9,6 +9,7 @@
 
         {% elif session['agency'] %}
             <li>Welcome, {{ session['agency'].get('agency_name') }}</li>
+            <li><a href="{{ url_for('get_agency_pets') }}">Your pets</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
 
         {% else %}

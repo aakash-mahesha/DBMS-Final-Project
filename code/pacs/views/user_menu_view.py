@@ -25,7 +25,7 @@ def get_available_pets():
             
             return result
     except Exception as e:
-        print(f"Error getting available pets: {e}")
+        return render_template('error.html', error_message=f"Error getting available pets: {e}")
     finally:
         db.close()
 
@@ -45,7 +45,7 @@ def get_adopted_pets_list():
                 return render_template('adoption_menu.html',username = username, pets=pets, adopted=True)
                 
         except Exception as e:
-            print(f"Error getting adopted pets: {e}")
+            return render_template('error.html', error_message=f"Error getting adopted pets: {e}")
         finally:
             db.close()
         

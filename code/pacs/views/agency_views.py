@@ -87,7 +87,7 @@ def edit_agency(agency_name):
                 sql = "UPDATE animal_agency SET agency_name = %s, agency_password = %s, agency_street_no = %s, agency_street_name = %s, agency_city = %s, agency_state = %s, agency_zip = %s, agency_contact_first_name = %s, agency_contact_last_name = %s, agency_contact_number = %s WHERE agency_name = %s"
                 cursor.execute(sql, (agency_name, agency_password, agency_streetnumber, streetname, city, state, zipcode, first_name, last_name, contact, agency_name))
                 db.commit()
-            return redirect(url_for('agency'))
+            return redirect(url_for('landing'))
         
     except Exception as e:
         return f"Error: {e}"

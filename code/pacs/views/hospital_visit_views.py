@@ -49,7 +49,7 @@ def get_doctors():
 
         return jsonify(doctors)
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return render_template('error.html', error_message=jsonify({'error': str(e)}))
     
 def fetch_doctors_by_hospital(selected_hospital):
     print('_fetch_doctors', selected_hospital)
@@ -80,7 +80,7 @@ def insert_into_pet_visit_doctor(pet_id,doctor_id,visit_date,diagnosis,medicatio
         return redirect(url_for('success_page'))  # Redirect to a success page
 
     except Exception as e:
-        print(f"Error inserting doctor visit details: {e}")
+        return render_template('error.html', error_message=f"Error inserting doctor visit details: {e}")
 
     finally:
         db.close() 

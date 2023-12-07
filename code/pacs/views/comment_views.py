@@ -24,7 +24,7 @@ def delete_comment_from_database(comment_id):
             db.commit()
 
     except Exception as e:
-        print(f"Error deleting comment: {e}")
+        return render_template('error.html', error_message=f"Error deleting comment: {e}")
     finally:
         db.close()
 
@@ -44,7 +44,7 @@ def add_comment(pet_id):
                             (pet_id, username, comment_text, comment_date))
             db.commit()
         except Exception as e:
-            print(f"Error getting pet details, images, and pet_comments: {e}")
+            return render_template('error.html', error_message=e)
         finally:
             db.close()
         return redirect(url_for('pet_details', pet_id=pet_id))

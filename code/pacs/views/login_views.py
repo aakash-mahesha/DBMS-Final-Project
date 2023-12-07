@@ -16,12 +16,12 @@ def user_login():
                 if user and user['user_password'] == password:
                     # Authentication successful
                     session['user'] = user
-                    return redirect(url_for('adoption_menu'))
+                    return redirect(url_for('get_adopted_pets_list'))
                 else:
                     # Authentication failed
                     return render_template('user_login.html', error="Invalid username or password")
         except Exception as e:
-            return f"Error: {e}"
+            return render_template('error.html', error_message=f"Error: {e}")
         finally:
             db.close()
 
@@ -47,7 +47,7 @@ def agency_login():
                     # Authentication failed
                     return render_template('agency_login.html', error="Invalid username or password")
         except Exception as e:
-            return f"Error: {e}"
+            return render_template('error.html', error_message=f"Error: {e}")
         finally:
             db.close()
 

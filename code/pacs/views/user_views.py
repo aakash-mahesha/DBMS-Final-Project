@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 
 # Create
@@ -21,7 +21,7 @@ def create_user():
                 cursor.execute(sql, (username, email, user_password, first_name, last_name))
                 db.commit()
         except Exception as e:
-            print(f"Error creating user: {e}")
+            return render_template('error.html', error_message=f"Error creating user: {e}")
         finally:
             db.close()
 
@@ -41,7 +41,7 @@ def users():
             print(result)
             return render_template('users/users.html', users=result)
     except Exception as e:
-        return f"Error: {e}"
+        return render_template('error.html', error_message=f"Error: {e}")
     finally:
         db.close()
 
@@ -54,11 +54,9 @@ def edit_user(username):
             sql = "SELECT * FROM user WHERE username = %s"
             cursor.execute(sql, (username,))
             user = cursor.fetchone()
-            print("User found:", user)
 
         if request.method == 'POST':
             # Update user data from the form
-            print("request forM:", request.form)
             print(request.form.get('username'))
             username = request.form.get('username')
             email = request.form.get('email')
@@ -71,9 +69,12 @@ def edit_user(username):
                 sql = "UPDATE user SET username = %s, email = %s, user_password = %s, first_name = %s, last_name = %s WHERE username = %s"
                 cursor.execute(sql, (username, email, user_password, first_name, last_name, username))
                 db.commit()
-            return redirect(url_for('users'))
+                cursor.execute("SELECT * FROM user WHERE username = %s", (username,))
+                new_user = cursor.fetchone()
+                session['user'] = new_user
+            return redirect(url_for('landing'))
     except Exception as e:
-        return f"Error: {e}"
+        return render_template('error.html', error_message=f"Error: {e}")
     finally:
         db.close()
 
@@ -89,11 +90,11 @@ def delete_user(username):
             cursor.execute(sql, (username,))
             db.commit()
     except Exception as e:
-        return f"Error: {e}"
+        return render_template('error.html', error_message=f"Error: {e}")
     finally:
         db.close()
 
-    return redirect(url_for('users'))
+    return redirect(url_for('landing'))
 
 
 # (TODO) Add more functions/queries here. Decide whether to have methods in the db or here.

@@ -42,7 +42,7 @@ def get_interaction_details(interaction_id):
             return result
 
     except Exception as e:
-        print(f"Error getting interaction details: {e}")
+        return render_template('error.html', error_message=f"Error getting interaction details: {e}")
     finally:
         db.close()
 
@@ -56,7 +56,7 @@ def update_interaction_details(interaction_id, new_visit_date, new_start_time, n
             
             db.commit()
     except Exception as e:
-        print(f"Error updating interaction details: {e}")
+        return render_template('error.html', error_message=f"Error updating interaction details: {e}")
     finally:
         db.close()
 
@@ -87,6 +87,6 @@ def delete_interaction_from_database(interaction_id):
             db.commit()
             print('deleted')
     except Exception as e:
-        print(f"Error deleting interaction details: {e}")
+        return render_template('error.html', error_message=f"Error deleting interaction details: {e}")
     finally:
         db.close()

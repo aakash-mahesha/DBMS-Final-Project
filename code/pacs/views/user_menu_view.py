@@ -11,7 +11,7 @@ def adoption_menu():
         return render_template('adoption_menu.html',username = username, pets=pets)
     else:
         # Redirect to login if the user is not logged in
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))
 
 # Function to get available pets from the database
 def get_available_pets():

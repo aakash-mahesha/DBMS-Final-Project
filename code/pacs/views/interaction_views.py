@@ -27,7 +27,7 @@ def edit_interaction(pet_id,interaction_id):
         return render_template('edit_interaction.html',pet_id = pet_id,interaction=interaction)
     else:
         # Redirect to login if the user is not logged in
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))
 
 
 def get_interaction_details(interaction_id):
@@ -75,7 +75,7 @@ def delete_interaction(pet_id,interaction_id):
     else:
         # Redirect to login if the user is not logged in
         # return redirect(url_for('scheduled_interactions'))
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))
 
 def delete_interaction_from_database(interaction_id):
     try:

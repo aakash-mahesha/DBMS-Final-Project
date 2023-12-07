@@ -140,6 +140,11 @@ def get_agency_pets():
     finally:
         db.close()
 
+def add_image_to_pet():
+    # Call procedure to enter
+
+    pass
+
 @app.route('/agency/pets/add', methods = ['GET','POST'])
 def add_agency_pet():
     if session['agency']:
@@ -158,12 +163,17 @@ def add_agency_pet():
         adopted = request.form.get('adopted', False)
         adopted_by = request.form.get('adopted_by')
         adoption_date = request.form.get('adoption_date', 'null')
-        print("req files", request.files)
+
+        uploaded_images_urls = []
+
         if 'images' in request.files:
             # print("got images ********", request.files.getlist())
             images = request.files.getlist('images')
-            for image in enumerate(images):
-                uploaded_url = upload_to_s3(image, 'pacs-dbms-neu', str(randint(2,100)*time())+".jpg")
+            for image in images:
+                image_name = str(randint(2,100)*time())+".jpg"
+                print("image name::::", image_name)
+                uploaded_url = upload_to_s3(image, 'pacs-dbms-neu', image_name)
+                uploaded_images_urls.append(uploaded_url)
 
         if adopted == False:
             adopted_by = None
@@ -172,7 +182,7 @@ def add_agency_pet():
         try:
             db = connection()
             with db.cursor() as cursor:
-                cursor.callproc('insert_pet_data', 
+                cursor.callproc('insert_pet_data',
                                 (pet_name,
                                 pet_type,
                                 age,
@@ -185,21 +195,19 @@ def add_agency_pet():
                                 adoption_date,
                                 provided_by_agency,))
                 
-                result = cursor.fetchall()
-                if result:
-                    # If there's an error, print it and handle accordingly
-                    error_message = result[0].get('error_message')
-                    print(f"Error: {error_message}")
-                    return render_template('error.html', error_message=error_message)
-                else:
-                    # If no error, commit the changes
-                    db.commit()
-                
+                result = cursor.fetchone()
+                db.commit()
+                print("Pet ID retrieved: *********",result['pet_id_result'])
+                print(uploaded_images_urls)
+                # Upload to pet_images db
+                for image in uploaded_images_urls:
+                    cursor.callproc('set_pet_images',(image, result['pet_id_result']))
+                db.commit()  
             return redirect(url_for('get_agency_pets'))
         
 
         except Exception as e:
-            return f"Error: {e}"
+            return render_template('error.html', error_message=e)
         finally:
             db.close()
         

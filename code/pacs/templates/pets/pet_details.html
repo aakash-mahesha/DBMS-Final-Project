@@ -11,7 +11,6 @@
 <h2>{{ pet.pet_name }} Details</h2>
 
 <!-- Display pet information -->
-<p>Photo: <img src="{{ pet.photo }}" alt="{{ pet.pet_name }} Photo"></p>
 <p>Type: {{ pet.pet_type }}</p>
 <p>Age: {{ pet.age }}</p>
 <p>Height: {{ pet.height }}</p>
@@ -37,7 +36,7 @@
 {% if pet_images %}
     <ul>
         {% for image in pet_images %}
-            <li><img src="{{ image }}" alt="Pet Image"></li>
+            <li><img src="{{ image['image_url'] }}" alt="Pet Image"></li>
         {% endfor %}
     </ul>
 {% else %}

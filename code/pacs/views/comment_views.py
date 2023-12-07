@@ -11,7 +11,7 @@ def delete_comment(pet_id, comment_id):
 
         return redirect(url_for('pet_details', pet_id=pet_id))
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))
 
 def delete_comment_from_database(comment_id):
     try:

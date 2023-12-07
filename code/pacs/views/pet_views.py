@@ -10,32 +10,28 @@ def pet_details(pet_id):
     # Check if a user is logged in
     if 'user' in session:
         username = session['user']['username']
-        pet_details, pet_images , pet_comments, latest_doctor_visit = get_pet_details(pet_id)
-        print(latest_doctor_visit)
-        # Fetch pet details from the database
-        print(pet_details, pet_images)
-        if request.method == 'POST':
-
-            visit_date = request.form.get('visit_date')
-            start_time = request.form.get('start_time')
-            end_time = request.form.get('end_time')
-            visit_type = request.form.get('visit_type')
-
-            
-
-            schedule_pet_interaction(username,pet_id,visit_type,visit_date,start_time,end_time)
-
-       
-        interaction_list = get_schedule_list_per_pet(pet_id)
-        print(interaction_list)
-        return render_template('/pets/pet_details.html', username=username, 
-                               pet=pet_details[0],pet_images = pet_images, 
-                               user_interaction_list = interaction_list,
-                               pet_comments = pet_comments,
-                               latest_doctor_visit = latest_doctor_visit)
+    elif 'agency' in session:
+        username = session['agency']['agency_name']
     else:
-        # Redirect to login if the user is not logged in
-        return redirect(url_for('login'))
+        return redirect(url_for('landing'))
+    pet_details, pet_images , pet_comments, latest_doctor_visit = get_pet_details(pet_id)
+    if request.method == 'POST':
+
+        visit_date = request.form.get('visit_date')
+        start_time = request.form.get('start_time')
+        end_time = request.form.get('end_time')
+        visit_type = request.form.get('visit_type')
+        schedule_pet_interaction(username,pet_id,visit_type,visit_date,start_time,end_time)
+
+    
+    interaction_list = get_schedule_list_per_pet(pet_id)
+    print(interaction_list)
+    return render_template('/pets/pet_details.html', username=username,
+                            pet=pet_details[0],pet_images = pet_images, 
+                            user_interaction_list = interaction_list,
+                            pet_comments = pet_comments,
+                            latest_doctor_visit = latest_doctor_visit)
+        
 
 # Function to get pet details from the database
 def get_pet_details(pet_id):
@@ -63,10 +59,6 @@ def get_pet_details(pet_id):
         print(f"Error getting pet details, images, and pet_comments: {e}")
     finally:
         db.close()
-    
-
-
-    
 
 def get_schedule_list_per_pet(pet_id):
     try:
@@ -132,4 +124,4 @@ def add_comment(pet_id):
             db.close()
         return redirect(url_for('pet_details', pet_id=pet_id))
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))

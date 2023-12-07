@@ -10,7 +10,7 @@
 
             {% if session['user'] %}
                 <li class="nav-item">Hello, {{ session['user'].get('username') }}!</li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('get_agency_pets') }}">Your pets</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('get_adopted_pets_list') }}">Your pets</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
 
             {% elif session['agency'] %}

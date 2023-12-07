@@ -21,8 +21,21 @@
 <body>
     {% include 'navbar.html' %}
 
-<h2>Adoption Menu</h2>
 
+{% if adopted %}
+    <h2>Your Adopted Pets</h2>
+    {% for pet in pets %}
+    <div class="pet-container">
+        <img class="pet-image" src="{{ pet.image_link }}" alt="{{ pet.pet_name }}">
+        <p>{{ pet.pet_name }}</p>
+        <p>{{ pet.breed_name}}</p>
+        <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
+            <button>View Details</button>
+        </a>
+    </div>
+    {% endfor %}
+{% else %}
+<h2>Pets you can Adopt</h2>
 {% for pet in pets %}
     <div class="pet-container">
         <img class="pet-image" src="{{ pet.image_link }}" alt="{{ pet.pet_name }}">
@@ -36,6 +49,6 @@
         </a>
     </div>
 {% endfor %}
-
+{% endif %}
 </body>
 </html>

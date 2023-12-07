@@ -8,7 +8,7 @@ def adoption_menu():
         username = session['user']['username']
         pets = get_available_pets()
 
-        return render_template('adoption_menu.html',username = username, pets=pets)
+        return render_template('adoption_menu.html',username = username, pets=pets, adopted=False)
     else:
         # Redirect to login if the user is not logged in
         return redirect(url_for('user_login'))
@@ -28,3 +28,27 @@ def get_available_pets():
         print(f"Error getting available pets: {e}")
     finally:
         db.close()
+
+
+@app.route('/adopted_pets/menu')
+def get_adopted_pets_list():
+    if 'user' in session:
+        username = session['user']['username']
+
+        try:
+            db = connection()
+            with db.cursor() as cursor:
+                # Call the stored procedure
+                cursor.callproc('get_adopted_pets_by_user',(username,))
+            
+                pets = cursor.fetchall()
+                return render_template('adoption_menu.html',username = username, pets=pets, adopted=True)
+                
+        except Exception as e:
+            print(f"Error getting adopted pets: {e}")
+        finally:
+            db.close()
+        
+    else:
+        # Redirect to login if the user is not logged in
+        return redirect(url_for('user_login'))

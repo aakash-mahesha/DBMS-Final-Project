@@ -121,3 +121,4 @@ def adopt_pet(pet_id):
         return redirect(url_for('pet_details', pet_id=pet_id))
     else:
         return redirect(url_for('user_login'))
+    

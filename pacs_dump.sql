@@ -138,7 +138,7 @@ CREATE TABLE `pet` (
   CONSTRAINT `provided_agency_fk` FOREIGN KEY (`provided_by_agency`) REFERENCES `animal_agency` (`agency_name`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `check_adopted_false` CHECK (((`adopted` = 1) or ((`adopted_by` is null) and (`adoption_date` is null)))),
   CONSTRAINT `check_adopted_true` CHECK (((`adopted` = 0) or ((`adopted_by` is not null) and (`adoption_date` is not null))))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `pet` (
 
 LOCK TABLES `pet` WRITE;
 /*!40000 ALTER TABLE `pet` DISABLE KEYS */;
-INSERT INTO `pet` VALUES (1,'Buddy','Dog',3,12,25,'Brown','beagle',0,NULL,NULL,'Happy Paws Rescue'),(2,'Luna','Cat',2,8,10,'Gray','persian_cat',1,'john_doe','2023-01-15','Wildlife Haven'),(3,'Kiwi','Bird',1,6,1,'Green','lovebird',0,NULL,NULL,'Happy Paws Rescue'),(4,'Nibbles','Rodents',1,4,0,'White','guinea_pig',0,NULL,NULL,'Wildlife Haven'),(5,'Max','Dog',4,15,30,'Golden','golden_retriever',1,'alice_smith','2022-11-05','Happy Paws Rescue');
+INSERT INTO `pet` VALUES (1,'Buddy','Dog',3,12,25,'Brown','beagle',0,NULL,NULL,'Happy Paws Rescue'),(2,'Luna','Cat',2,8,10,'Gray','persian_cat',1,'john_doe','2023-01-15','Wildlife Haven'),(3,'Kiwi','Bird',1,6,1,'Green','lovebird',0,NULL,NULL,'Happy Paws Rescue'),(4,'Nibbles','Rodents',1,4,0,'White','guinea_pig',0,NULL,NULL,'Wildlife Haven'),(5,'Max','Dog',4,15,30,'Golden','golden_retriever',1,'alice_smith','2022-11-05','Happy Paws Rescue'),(31,'Dan','Dog',10,100,100,'Black','poodle',0,NULL,NULL,'Happy Paws Rescue'),(33,'Lola','Cat',10,100,100,'Black','persian_cat',1,'chris_lee','2023-12-07','Happy Paws Rescue'),(34,'Max','Dog',10,100,100,'Pink','poodle',1,'chris_lee','2023-12-07','Happy Paws Rescue'),(36,'Timmy','Dog',10,10,100,'Golden','golden_retriever',0,NULL,NULL,'Happy Paws Rescue');
 /*!40000 ALTER TABLE `pet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +189,7 @@ CREATE TABLE `pet_image` (
   PRIMARY KEY (`image_id`),
   KEY `pet_fk` (`image_of_pet`),
   CONSTRAINT `pet_fk` FOREIGN KEY (`image_of_pet`) REFERENCES `pet` (`pet_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,6 +198,7 @@ CREATE TABLE `pet_image` (
 
 LOCK TABLES `pet_image` WRITE;
 /*!40000 ALTER TABLE `pet_image` DISABLE KEYS */;
+INSERT INTO `pet_image` VALUES (3,'https://pacs-dbms-neu.s3.amazonaws.com/110625262948.89844.jpg',31),(4,'https://pacs-dbms-neu.s3.amazonaws.com/122538789868.14124.jpg',33),(5,'https://pacs-dbms-neu.s3.amazonaws.com/15317354831.263556.jpg',34),(6,'https://pacs-dbms-neu.s3.amazonaws.com/49355921139.058014.jpg',34),(7,'https://pacs-dbms-neu.s3.amazonaws.com/110625262948.89844.jpg',34),(8,'https://pacs-dbms-neu.s3.amazonaws.com/18721362000.145683.jpg',36);
 /*!40000 ALTER TABLE `pet_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +222,7 @@ CREATE TABLE `pet_visit_doctor` (
   KEY `doctor_fk` (`doctor_id`),
   CONSTRAINT `doctor_fk` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `doctor_visit_pet_id_fk` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`pet_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +231,7 @@ CREATE TABLE `pet_visit_doctor` (
 
 LOCK TABLES `pet_visit_doctor` WRITE;
 /*!40000 ALTER TABLE `pet_visit_doctor` DISABLE KEYS */;
-INSERT INTO `pet_visit_doctor` VALUES (1,'D001',1,'2023-01-10','Routine checkup, all parameters normal','None','Great'),(2,'D002',2,'2023-01-15','Minor cough and sneezing','Prescribed antibiotics','Good'),(1,'D001',3,'2023-02-05','Limping on right hind leg','Prescribed pain relievers','Moderate'),(2,'D002',4,'2023-02-12','Healthy and active','None','Great'),(3,'D001',5,'2023-03-20','Feathers appear dull, possible nutrient deficiency','Prescribed avian supplement','Moderate'),(4,'D002',6,'2023-04-02','Small wound on tail, cleaned and bandaged','Prescribed topical ointment','Good'),(1,'D002',7,'2023-12-20','Everything\'s Perfect ','No Medication Needed','Great');
+INSERT INTO `pet_visit_doctor` VALUES (1,'D001',1,'2023-01-10','Routine checkup, all parameters normal','None','Great'),(2,'D002',2,'2023-01-15','Minor cough and sneezing','Prescribed antibiotics','Good'),(1,'D001',3,'2023-02-05','Limping on right hind leg','Prescribed pain relievers','Moderate'),(2,'D002',4,'2023-02-12','Healthy and active','None','Great'),(3,'D001',5,'2023-03-20','Feathers appear dull, possible nutrient deficiency','Prescribed avian supplement','Moderate'),(4,'D002',6,'2023-04-02','Small wound on tail, cleaned and bandaged','Prescribed topical ointment','Good');
 /*!40000 ALTER TABLE `pet_visit_doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +261,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('Akm','Akm','Akm@gmail.com','Akm','Akm',NULL),('Akm2','Akm2','Akm2@gmail.com','Akm2','Akm2',NULL),('alice_smith','pass456','alice.smith@email.com','Alice','Smith',2),('amy_wilson','amyPass','amy.wilson@email.com','Amy','Wilson',10),('bob_jones','secret789','bob.jones@email.com','Bob','Jones',3),('chris_lee','chrisPass','chris.lee@email.com','Chris','Lee',9),('david_clark','david123','david.clark@email.com','David','Clark',7),('emma_white','emmaPass','emma.white@email.com','Emma','White',4),('john_doe','password123','john.doe@email.com','John','Doe',1),('linda_taylor','linda456','linda.taylor@email.com','Linda','Taylor',8),('mike_brown','mikePass','mike.brown@email.com','Mike','Brown',5),('sara_miller','saraPass','sara.miller@email.com','Sara','Miller',6);
+INSERT INTO `user` VALUES ('Akm','Akm','Akm@gmail.com','Akm','Akm',NULL),('Akm2','Akm2','Akm2@gmail.com','Akm2','Akm2',NULL),('alice_smith','pass456','alice.smith@email.com','Alice','Smith',2),('amy_wilson','amyPass','amy.wilson@email.com','Amy','Wilson',10),('bob_jones','secret789','bob.jones@email.com','Bob','Jones',3),('chris_lee','chrisPass','chris.lee@email.com','ChitChat','Lee',9),('david_clark','david123','david.clark@email.com','David','Clark',7),('emma_white','emmaPass','emma.white@email.com','Emma','White',4),('john_doe','password123','john.doe@email.com','John','Doe',1),('linda_taylor','linda456','linda.taylor@email.com','Linda','Taylor',8),('mike_brown','mikePass','mike.brown@email.com','Mike','Brown',5),('sara_miller','saraPass','sara.miller@email.com','Sara','Miller',6);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +320,7 @@ CREATE TABLE `user_comment_pets` (
 
 LOCK TABLES `user_comment_pets` WRITE;
 /*!40000 ALTER TABLE `user_comment_pets` DISABLE KEYS */;
-INSERT INTO `user_comment_pets` VALUES (1,'john_doe',1,'Buddy is such an energetic and friendly dog!','2023-01-20 08:30:00'),(2,'alice_smith',2,'Luna is the sweetest cat ever!','2023-01-21 10:45:00'),(1,'john_doe',3,'Buddy loves going for long walks in the park.','2023-01-22 15:20:00'),(2,'alice_smith',4,'Luna enjoys cuddling and purring.','2023-01-23 12:10:00'),(3,'emma_white',5,'Kiwi chirps happily every morning!','2023-01-24 09:05:00'),(4,'mike_brown',6,'Nibbles is a curious little rodent!','2023-01-25 14:30:00'),(5,'sara_miller',7,'Max, the Golden Retriever, is very playful!','2023-01-26 11:15:00');
+INSERT INTO `user_comment_pets` VALUES (2,'alice_smith',2,'Luna is the sweetest cat ever!','2023-01-21 10:45:00'),(1,'john_doe',3,'Buddy loves going for long walks in the park.','2023-01-22 15:20:00'),(2,'alice_smith',4,'Luna enjoys cuddling and purring.','2023-01-23 12:10:00'),(3,'emma_white',5,'Kiwi chirps happily every morning!','2023-01-24 09:05:00'),(4,'mike_brown',6,'Nibbles is a curious little rodent!','2023-01-25 14:30:00'),(5,'sara_miller',7,'Max, the Golden Retriever, is very playful!','2023-01-26 11:15:00'),(34,'chris_lee',10,'Looking lovely max!','2023-12-07 02:53:00'),(33,'chris_lee',11,'What\'s up Lola!!','2023-12-07 02:55:15'),(33,'john_doe',12,'Heya! looking good Lolaaa!','2023-12-07 03:09:13');
 /*!40000 ALTER TABLE `user_comment_pets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,7 +344,7 @@ CREATE TABLE `user_pet_interactions` (
   KEY `interaction_user_fk` (`username`),
   CONSTRAINT `interaction_pet_id_fk` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`pet_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `interaction_user_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +353,7 @@ CREATE TABLE `user_pet_interactions` (
 
 LOCK TABLES `user_pet_interactions` WRITE;
 /*!40000 ALTER TABLE `user_pet_interactions` DISABLE KEYS */;
-INSERT INTO `user_pet_interactions` VALUES ('john_doe',1,1,'Play','2023-01-20','10:00:00','10:30:00'),('alice_smith',2,2,'Feed','2023-01-21','12:45:00','13:15:00'),('mike_brown',4,4,'Play','2023-01-23','11:00:00','11:30:00'),('sara_miller',5,5,'Feed','2023-01-24','09:30:00','10:00:00'),('john_doe',1,6,'Pet','2023-01-25','14:00:00','14:30:00'),('alice_smith',2,7,'Play','2023-01-26','16:30:00','17:00:00'),('emma_white',3,8,'Feed','2023-01-27','12:00:00','12:30:00'),('mike_brown',4,9,'Pet','2023-01-28','13:45:00','14:15:00'),('sara_miller',5,10,'Play','2023-01-29','10:30:00','11:00:00'),('Akm2',1,11,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,12,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,13,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,14,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',4,16,'Play','2023-12-26','03:56:00','05:58:00');
+INSERT INTO `user_pet_interactions` VALUES ('john_doe',1,1,'Play','2023-01-20','10:00:00','10:30:00'),('alice_smith',2,2,'Feed','2023-01-21','12:45:00','13:15:00'),('mike_brown',4,4,'Play','2023-01-23','11:00:00','11:30:00'),('sara_miller',5,5,'Feed','2023-01-24','09:30:00','10:00:00'),('john_doe',1,6,'Pet','2023-01-25','14:00:00','14:30:00'),('alice_smith',2,7,'Play','2023-01-26','16:30:00','17:00:00'),('emma_white',3,8,'Feed','2023-01-27','12:00:00','12:30:00'),('mike_brown',4,9,'Pet','2023-01-28','13:45:00','14:15:00'),('sara_miller',5,10,'Play','2023-01-29','10:30:00','11:00:00'),('Akm2',1,11,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,12,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,13,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',1,14,'Feed','2023-12-27','15:27:00','15:30:00'),('Akm2',3,15,'Play','2023-12-26','16:56:00','16:56:00'),('Akm2',4,16,'Play','2023-12-26','03:56:00','05:58:00');
 /*!40000 ALTER TABLE `user_pet_interactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -462,6 +463,39 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_adopted_pets_by_user` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_adopted_pets_by_user`(IN user_adopted VARCHAR(20))
+BEGIN
+    SELECT 
+        pet.pet_id,
+        pet.pet_name,
+        pet_breed.breed_name,
+        (
+            SELECT pi.image_url
+            FROM pet_image pi
+            WHERE pi.image_of_pet = pet.pet_id
+            ORDER BY pi.image_id ASC
+            LIMIT 1
+        ) AS image_link
+    FROM 
+        pet
+    JOIN pet_breed ON pet.breed_name = pet_breed.breed_name
+    WHERE pet.adopted_by = user_adopted;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_all_pet_details` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -500,48 +534,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_doctors_by_hospital` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_doctors_by_hospital`(IN hospital_name VARCHAR(50))
-BEGIN
-    SELECT doctor_id,doctor_first_name, doctor_last_name
-    FROM doctor
-    WHERE works_at_hospital_name = hospital_name;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_hospitals_by_agency` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_hospitals_by_agency`(IN agencyName VARCHAR(50))
-BEGIN
-    SELECT hospital_name
-    FROM agency_partnered_vet_hospitals
-    WHERE agency_name = agencyName;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_interaction_details_by_id` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -555,6 +547,29 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_interaction_details_by_id`(IN in_interaction_id INT)
 BEGIN
     SELECT * FROM user_pet_interactions WHERE interaction_id = in_interaction_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_pets_for_agency` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_pets_for_agency`(IN agency_name VARCHAR(50))
+BEGIN
+	-- Fetch pets for the current agency
+	SELECT *
+	FROM pet
+	WHERE provided_by_agency = agency_name;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -657,7 +672,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_list_per_pet`(
 BEGIN
     SELECT *
     FROM user_pet_interactions
-    WHERE pet_id = in_pet_id;
+    WHERE pet_id = in_pet_id AND username = in_username;
     
 END ;;
 DELIMITER ;
@@ -684,7 +699,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `insert_pet_visit_doctor` */;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_pet_data` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -694,30 +709,48 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_pet_visit_doctor`(
-    IN p_pet_id INT,
-    IN p_doctor_id VARCHAR(10),
-    IN p_visit_date DATE,
-    IN p_diagnosis VARCHAR(100),
-    IN p_medications VARCHAR(50),
-    IN p_health_level ENUM('Great','Good','Moderate','Need Care')
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_pet_data`(
+	IN pet_name_param VARCHAR(10),
+    IN pet_type_param ENUM('Dog','Cat','Bird','Rodents'),
+    IN age_param INT,
+    IN height_param INT,
+    IN weight_param INT,
+    IN color_param VARCHAR(10),
+    IN breed_name_param VARCHAR(20),
+    IN adopted_param BOOLEAN,
+    IN adopted_by_param VARCHAR(20),
+    IN adoption_date_param DATE,
+    IN provided_by_agency_param VARCHAR(20)
 )
 BEGIN
-    INSERT INTO pet_visit_doctor (
-        pet_id,
-        doctor_id,
-        visit_date,
-        diagnosis,
-        medications,
-        health_level
+    INSERT INTO pet (
+        pet_name,
+        pet_type,
+        age,
+        height,
+        weight,
+        color,
+        breed_name,
+        adopted,
+        adopted_by,
+        adoption_date,
+        provided_by_agency
     ) VALUES (
-        p_pet_id,
-        p_doctor_id,
-        p_visit_date,
-        p_diagnosis,
-        p_medications,
-        p_health_level
+        pet_name_param,
+        pet_type_param,
+        age_param,
+        height_param,
+        weight_param,
+        color_param,
+        breed_name_param,
+        adopted_param,
+        adopted_by_param,
+        adoption_date_param,
+        provided_by_agency_param
     );
+    
+    SELECT last_insert_id() as pet_id_result;
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -746,6 +779,36 @@ BEGIN
     INSERT INTO user_pet_interactions 
         (username, pet_id, interaction_type, interaction_date, interaction_start_time, interaction_end_time)
     VALUES (p_username, p_pet_id, p_interaction_type, p_interaction_date, p_interaction_start_time, p_interaction_end_time);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `set_pet_images` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `set_pet_images`(
+	IN pet_image_url VARCHAR(500),
+    IN pet_id INT
+)
+BEGIN
+	INSERT INTO pet_image(
+		image_url,
+        image_of_pet
+        )
+	VALUES (
+		pet_image_url,
+        pet_id
+        );
+        
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -782,6 +845,33 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_pet_adoption_details` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_pet_adoption_details`(
+	IN user_adopted VARCHAR(20),
+    IN pet_id_adopted INT,
+    IN pet_adoption_date DATE
+)
+BEGIN
+	UPDATE pet
+    SET adopted = 1,
+		adopted_by = user_adopted,
+		adoption_date = pet_adoption_date
+	WHERE pet_id = pet_id_adopted;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -792,4 +882,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-06  0:28:07
+-- Dump completed on 2023-12-07  4:50:47

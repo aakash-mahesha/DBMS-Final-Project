@@ -25,7 +25,7 @@ def pet_details(pet_id):
 
     
     interaction_list = get_schedule_list_per_pet(pet_id)
-    print(interaction_list)
+    print("comments list", pet_comments)
     return render_template('/pets/pet_details.html', username=username,
                             pet=pet_details[0],pet_images = pet_images, 
                             user_interaction_list = interaction_list,
@@ -101,25 +101,21 @@ def schedule_pet_interaction(username, pet_id, interaction_type, interaction_dat
         print(f"Error scheduling pet interaction: {e}")
     finally:
         db.close()
+    
 
-
-@app.route('/adoption/pet/<int:pet_id>/add_comment', methods=['POST'])
-def add_comment(pet_id):
+@app.route('/adoption/pet/<int:pet_id>/adopt', methods=['POST', 'GET'])
+def adopt_pet(pet_id):
     if 'user' in session:
         username = session['user']['username']
-        comment_text = request.form.get('comment_text')
-        pet_id = pet_id
-        comment_date = datetime.now()
-
-        # Add logic to store the comment in the database
+        current_date = datetime.now()
         try:
-            db = connection()
-            with db.cursor() as cursor:
-                cursor.callproc("add_comment_to_database",
-                            (pet_id, username, comment_text, comment_date))
-            db.commit()
+                db = connection()
+                with db.cursor() as cursor:
+                    cursor.callproc("update_pet_adoption_details",
+                                (username, pet_id, current_date))
+                db.commit()
         except Exception as e:
-            print(f"Error getting pet details, images, and pet_comments: {e}")
+            print(f"Error updating adoption details: {e}")
         finally:
             db.close()
         return redirect(url_for('pet_details', pet_id=pet_id))

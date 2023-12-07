@@ -28,4 +28,3 @@ def get_available_pets():
         print(f"Error getting available pets: {e}")
     finally:
         db.close()
-

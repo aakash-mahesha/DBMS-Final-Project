@@ -1,22 +1,24 @@
-<nav>
-    <ul>
-        <li><a href="{{ url_for('landing') }}">Welcome</a></li>
+{% extends 'base.html' %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('landing') }}">Welcome</a></li>
         <!-- Add more links for other pages as needed -->
 
         {% if session['user'] %}
-            <li>Hello, {{ session['user'].get('username') }}!</li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li class="nav-item">Hello, {{ session['user'].get('username') }}!</li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
 
         {% elif session['agency'] %}
-            <li>Welcome, {{ session['agency'].get('agency_name') }}</li>
-            <li><a href="{{ url_for('get_agency_pets') }}">Your pets</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li class="nav-item">Welcome, {{ session['agency'].get('agency_name') }}</li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_agency_pets') }}">Your pets</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
 
         {% else %}
-            <li><a href="{{ url_for('user_login') }}">User Login</a></li>
-            <li><a href="{{ url_for('agency_login') }}">Agency Login</a></li>
-            <li><a href="{{ url_for('create_user') }}">Register User</a></li>
-            <li><a href="{{ url_for('create_agency') }}">Register Agency</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('user_login') }}">User Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('agency_login') }}">Agency Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('create_user') }}">Register User</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('create_agency') }}">Register Agency</a></li>
         {% endif %}
     </ul>
 </nav>

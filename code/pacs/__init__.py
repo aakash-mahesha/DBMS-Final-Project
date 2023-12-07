@@ -2,7 +2,9 @@ from flask import Flask
 import pymysql
 from pacs.config import Config
 from flask_session import Session
+
 app = Flask(__name__)
+
 app.secret_key = 'pacs_dbms'
 app.config['SESSION_TYPE'] = 'filesystem'
 

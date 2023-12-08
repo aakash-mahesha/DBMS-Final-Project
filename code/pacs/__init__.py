@@ -10,11 +10,15 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 def connection():
-    db = pymysql.connect(host=Config.MYSQL_HOST,
+    try:
+        db = pymysql.connect(host=Config.MYSQL_HOST,
                     user=Config.MYSQL_USER,
                     password=Config.MYSQL_PASSWORD,
                     db=Config.MYSQL_DB,
                     cursorclass=pymysql.cursors.DictCursor)
+    except Exception as e:
+        print("Error while connecting to DB: ", e)
+        return None
     return db
 
 from pacs.views import landing,pet_views, user_views,login_views,user_menu_view,pet_views,interaction_views,agency_views,comment_views,hospital_visit_views

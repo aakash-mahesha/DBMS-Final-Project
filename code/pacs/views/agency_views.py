@@ -20,6 +20,8 @@ def create_agency():
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         contact = request.form.get('contact')
+        hospital_associated = request.form.get('hospital_associated')
+        print("Hospital Associated: ", hospital_associated)
         # print(request.form)
 
         # Create a new user instance
@@ -30,14 +32,37 @@ def create_agency():
                 sql = "INSERT INTO animal_agency (agency_name, agency_password, agency_street_no, agency_street_name, agency_city, agency_state, agency_zip, agency_contact_first_name, agency_contact_last_name, agency_contact_number) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 cursor.execute(sql, (agency_name, agency_password, agency_streetnumber, streetname, city, state, zipcode, first_name, last_name, contact))
                 db.commit()
+                sql = "SELECT * FROM animal_agency WHERE agency_name = %s"
+                cursor.execute(sql, (agency_name))
+                agency = cursor.fetchone()
+                print("AGENCY: ", agency)
+                session['agency'] = agency
+                cursor.execute("INSERT INTO agency_partnered_vet_hospitals(agency_name, hospital_name) VALUES (%s, %s)",
+                               (agency_name, hospital_associated))
+                db.commit()
         except Exception as e:
-            print(f"Error creating agency: {e}")
+            return f"Error creating agency: {e}"
         finally:
             db.close()
 
-        return redirect(url_for('agency'))
+        return redirect(url_for('landing'))
 
-    return render_template('animal_agency/create_agency.html')
+    hospitals = get_hospitals()
+    return render_template('animal_agency/create_agency.html', hospitals = hospitals)
+
+
+def get_hospitals():
+    try:
+        db = connection()
+        with db.cursor() as cursor:
+            cursor.execute("SELECT hospital_name FROM vet_hospital")
+            hospital_results = cursor.fetchall()
+            print("Hospitals: ", hospital_results)
+            return hospital_results
+    except Exception as e:
+        return f"Error: {e}"
+    finally:
+        db.close()
 
 # Read
 @app.route('/agency')
@@ -65,7 +90,11 @@ def edit_agency(agency_name):
             sql = "SELECT * FROM animal_agency WHERE agency_name = %s"
             cursor.execute(sql, (agency_name,))
             agency = cursor.fetchone()
-            print("Agency found: ", agency)
+            sql = "SELECT hospital_name FROM agency_partnered_vet_hospitals WHERE agency_name = %s"
+            cursor.execute(sql, (agency_name,))
+            hospital_name = cursor.fetchone()
+            hospital_results = get_hospitals()
+            
 
         # print("request method", request.method)
         # print("form:", request.form)
@@ -82,10 +111,15 @@ def edit_agency(agency_name):
             first_name = request.form.get('first_name')
             last_name = request.form.get('last_name')
             contact = request.form.get('contact')
+            hospital_associated = request.form.get('hospital_associated')
+            print("Hospital associated", hospital_associated)
             # Commit the changes to the database
             with db.cursor() as cursor:
                 sql = "UPDATE animal_agency SET agency_name = %s, agency_password = %s, agency_street_no = %s, agency_street_name = %s, agency_city = %s, agency_state = %s, agency_zip = %s, agency_contact_first_name = %s, agency_contact_last_name = %s, agency_contact_number = %s WHERE agency_name = %s"
                 cursor.execute(sql, (agency_name, agency_password, agency_streetnumber, streetname, city, state, zipcode, first_name, last_name, contact, agency_name))
+                db.commit()
+                cursor.execute("UPDATE agency_partnered_vet_hospitals SET agency_name = %s, hospital_name = %s WHERE agency_name= %s",
+                               (agency_name, hospital_associated, agency_name))
                 db.commit()
             return redirect(url_for('landing'))
         
@@ -94,7 +128,7 @@ def edit_agency(agency_name):
     finally:
         db.close()
 
-    return render_template('animal_agency/edit_agency.html', agency=agency)
+    return render_template('animal_agency/edit_agency.html', agency=agency, hospitals = hospital_results, selected_h_name = hospital_name)
 
 # Delete
 @app.route('/agency/delete/<string:agency_name>')

@@ -4,82 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Visit Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 
-<form id="doctorVisitForm" method="post" action="{{url_for('doctor_visit_form',agency_name = agency_name,pet_id = pet_id)}}">
-    <label for="hospital">Select Hospital:</label>
-    <select id="hospital" name="hospital">
-        <option value="">Select Hospital</option> 
-        {% for hospital in hospitals %}
-            <option value="{{ hospital }}">{{ hospital }}</option>
-        {% endfor %}
-    </select>
+<div class="container mt-5">
+    <h1> Doctor Visit Form</h1>
+    <form id="doctorVisitForm" method="post" action="{{url_for('doctor_visit_form', agency_name=agency_name, pet_id=pet_id)}}" class="needs-validation" novalidate>
 
-    <br>
+        <div class="form-group">
+            <label for="hospital">Select Hospital:</label>
+            <select id="hospital" name="hospital" class="form-control">
+                <option value="">Select Hospital</option> 
+                {% for hospital in hospitals %}
+                    <option value="{{ hospital }}">{{ hospital }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <label for="doctor">Select Doctor:</label>
-    <select id="doctor" name="doctor" required>
-        <!-- Doctors will be dynamically added here based on the selected hospital -->
-    </select>
+        <div class="form-group">
+            <label for="doctor">Select Doctor:</label>
+            <select id="doctor" name="doctor" class="form-control" required>
+                <!-- Doctors will be dynamically added here based on the selected hospital -->
+            </select>
+        </div>
 
-    <br>
+        <div class="form-group">
+            <label for="visit_date">Visit Date:</label>
+            <input type="date" id="visit_date" name="visit_date" class="form-control" required>
+        </div>
 
-    <label for="visit_date">Visit Date:</label>
-    <input type="date" id="visit_date" name="visit_date" required>
+        <div class="form-group">
+            <label for="diagnosis">Diagnosis:</label>
+            <input type="text" id="diagnosis" name="diagnosis" class="form-control" required>
+        </div>
 
-    <br>
+        <div class="form-group">
+            <label for="medications">Medications:</label>
+            <input type="text" id="medications" name="medications" class="form-control" required>
+        </div>
 
-    <label for="diagnosis">Diagnosis:</label>
-    <input type="textbox" id="diagnosis" name="diagnosis" required>
+        <div class="form-group">
+            <label for="health_level">Health Level:</label>
+            <select id="health_level" name="health_level" class="form-control" required>
+                <option value="Great">Great</option>
+                <option value="Good">Good</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Need Care">Need Care</option>
+            </select>
+        </div>
 
-    <br>
-
-    <label for="medications">Medications:</label>
-    <input type="text" id="medications" name="medications" required>
-
-    <br>
-
-    <label for="health_level">Health Level:</label>
-    <select id="health_level" name="health_level" required>
-        <option value="Great">Great</option>
-        <option value="Good">Good</option>
-        <option value="Moderate">Moderate</option>
-        <option value="Need Care">Need Care</option>
-    </select>
-
-    <br>
-
-    <button type="submit">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
 <script>
     $(document).ready(function() {
         $("#hospital").change(function() {
-            var selectedHospital = $(this).val();
+        var selectedHospital = $(this).val();
 
-            $.ajax({
-                url: "/get_doctors",
-                type: "POST",
-                data: {hospital: selectedHospital},
-                success: function(data) {
-                    $("#doctor").empty();
-                    $.each(data, function(index, doctor) {
-                        // Combine first and last name for display
-                        var fullName = doctor.doctor_first_name + ' ' + doctor.doctor_last_name;
-                        console.log(fullName,doctor.doctor_id)
-                        // Append option with doctor_id as value and fullName as text
-                        $("#doctor").append('<option value="' + doctor.doctor_id + '">' + fullName + '</option>');
-                    });
-                },
-                error: function(error) {
-                    console.log("Error fetching doctors: " + error);
-                }
-            });
+        $.ajax({
+            url: "/get_doctors",
+            type: "POST",
+            data: { hospital: selectedHospital },
+            success: function(data) {
+                $("#doctor").empty();
+                $.each(data, function(index, doctor) {
+                    // Combine first and last name for display
+                    var fullName = doctor.doctor_first_name + ' ' + doctor.doctor_last_name;
+                    console.log(fullName, doctor.doctor_id)
+                    // Append option with doctor_id as value and fullName as text
+                    $("#doctor").append('<option value="' + doctor.doctor_id + '">' + fullName + '</option>');
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX Error: " + textStatus, errorThrown);
+            }
         });
     });
+});
+
 </script>
+
+
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

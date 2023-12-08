@@ -4,51 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adoption Menu</title>
-    <style>
-        /* Add some styling to the container */
-        .pet-container {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
+    <!-- Include Bootstrap CSS -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
 
-        .pet-image {
-            max-width: 100%;
-            height: auto;
+    <style>
+        .card-img-top {
+            height: 200px; /* Set a fixed height for the card images */
+            object-fit: cover; /* Ensure the image covers the entire container */
         }
     </style>
 </head>
 <body>
     {% include 'navbar.html' %}
 
+    <div class="container mt-5">
+        {% if adopted %}
+            <h2>Your Adopted Pets</h2>
+            <div class="card-deck">
+                {% for pet in pets %}
+                    <div class="card">
+                        <img src="{{ pet.image_link }}" alt="{{ pet.pet_name }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pet.pet_name }}</h5>
+                            <p class="card-subtitle mb-2 text-muted">{{ pet.breed_name}}</p>
+                            <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}" class="btn btn-primary btn-block">View Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2>Pets you can Adopt</h2>
+            <div class="card-deck">
+                {% for pet in pets %}
+                    <div class="card">
+                        <img src="{{ pet.image_link }}" alt="{{ pet.pet_name }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pet.pet_name }}</h5>
+                            <p class="card-subtitle mb-2 text-muted">{{ pet.breed_name}}</p>
+                            <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}" class="btn btn-primary btn-block">View Details</a>
+                            <a href="{{ url_for('adopt_pet', pet_id=pet.pet_id) }}" class="btn btn-success btn-block" onclick="return confirm('Are you sure you want to adopt this pet?')">Adopt Pet</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 
-{% if adopted %}
-    <h2>Your Adopted Pets</h2>
-    {% for pet in pets %}
-    <div class="pet-container">
-        <img class="pet-image" src="{{ pet.image_link }}" alt="{{ pet.pet_name }}">
-        <p>{{ pet.pet_name }}</p>
-        <p>{{ pet.breed_name}}</p>
-        <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
-            <button>View Details</button>
-        </a>
-    </div>
-    {% endfor %}
-{% else %}
-<h2>Pets you can Adopt</h2>
-{% for pet in pets %}
-    <div class="pet-container">
-        <img class="pet-image" src="{{ pet.image_link }}" alt="{{ pet.pet_name }}">
-        <p>{{ pet.pet_name }}</p>
-        <p>{{ pet.breed_name}}</p>
-        <a href="{{ url_for('pet_details', pet_id=pet.pet_id) }}">
-            <button>View Details</button>
-        </a>
-        <a href="{{ url_for('adopt_pet', pet_id=pet.pet_id) }}" onclick="return confirm('Are you sure you want to adopt this pet?')">
-            <button>Adopt Pet</button>
-        </a>
-    </div>
-{% endfor %}
-{% endif %}
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 </body>
 </html>

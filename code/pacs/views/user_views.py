@@ -12,13 +12,27 @@ def create_user():
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
 
+        street_no = request.form.get('street_no')
+        street_name = request.form.get('street_name')
+        city = request.form.get('city')
+        state = request.form.get('state')
+        zip_code = request.form.get('zip')
+
         # Create a new user instance
         try:
             db = connection()
             with db.cursor() as cursor:
                 # Insert a new user into the database
-                sql = "INSERT INTO user (username, email, user_password, first_name, last_name) VALUES (%s, %s, %s, %s, %s)"
-                cursor.execute(sql, (username, email, user_password, first_name, last_name))
+                cursor.callproc('insert_new_user',(username, 
+                                                   user_password, 
+                                                   email,
+                                                   first_name, 
+                                                   last_name,
+                                                   street_no,
+                                                   street_name,
+                                                   city,
+                                                   state,
+                                                   zip_code))
                 db.commit()
         except Exception as e:
             return render_template('error.html', error_message=f"Error creating user: {e}")
@@ -55,30 +69,57 @@ def edit_user(username):
             cursor.execute(sql, (username,))
             user = cursor.fetchone()
 
+
+            address_id = user['address_id']
+            sql = "SELECT * FROM user_address WHERE address_id = %s"
+            cursor.execute(sql,(address_id,))
+            address = cursor.fetchone()
+
         if request.method == 'POST':
             # Update user data from the form
             print(request.form.get('username'))
-            username = request.form.get('username')
+            username = username
             email = request.form.get('email')
             user_password = request.form.get('password')
             first_name = request.form.get('first_name')
             last_name = request.form.get('last_name')
+            street_no = request.form.get('street_no')
+            street_name = request.form.get('street_name')
+            city = request.form.get('city')
+            state = request.form.get('state')
+            zip_code = request.form.get('zip')
 
+            print("****",username, 
+                                 email, 
+                                 user_password, 
+                                 first_name, 
+                                 last_name,
+                                 street_no,
+                                 street_name,
+                                 city,
+                                 state,
+                                 zip_code)
             # Commit the changes to the database
             with db.cursor() as cursor:
-                sql = "UPDATE user SET username = %s, email = %s, user_password = %s, first_name = %s, last_name = %s WHERE username = %s"
-                cursor.execute(sql, (username, email, user_password, first_name, last_name, username))
+                cursor.callproc('update_user',
+                                (username, 
+                                 user_password, 
+                                 email, 
+                                 first_name, 
+                                 last_name,
+                                 street_no,
+                                 street_name,
+                                 city,
+                                 state,
+                                 zip_code))
                 db.commit()
-                cursor.execute("SELECT * FROM user WHERE username = %s", (username,))
-                new_user = cursor.fetchone()
-                session['user'] = new_user
             return redirect(url_for('landing'))
     except Exception as e:
         return render_template('error.html', error_message=f"Error: {e}")
     finally:
         db.close()
 
-    return render_template('users/edit_user.html', user=user)
+    return render_template('users/edit_user.html', user=user, address=address)
 
 # Delete
 @app.route('/users/delete/<string:username>')

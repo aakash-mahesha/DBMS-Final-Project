@@ -1,155 +1,198 @@
-<!-- Display pet details and provide actions for the user -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ pet.pet_name }} Details</title>
+    <!-- Include Bootstrap CSS -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 {% include 'navbar.html' %}
-   
-<h2>{{ pet.pet_name }} Details</h2>
 
-<!-- Display pet information -->
-<p>Type: {{ pet.pet_type }}</p>
-<p>Age: {{ pet.age }}</p>
-<p>Height: {{ pet.height }}</p>
-<p>Weight: {{ pet.weight }}</p>
-<p>Color: {{ pet.color }}</p>
-<p>Breed: {{ pet.breed_name }}</p>
+<div class="container mt-5">
 
-<!-- Display doctor visit details -->
-<h3>Latest Doctor Visit</h3>
-{% if latest_doctor_visit %}
-    <p>Date: {{ latest_doctor_visit.visit_date }}</p>
-    <p>Diagnosis: {{ latest_doctor_visit.diagnosis }}</p>
-    <p>Medications: {{ latest_doctor_visit.medications }}</p>
-    <p>Health Level: {{ latest_doctor_visit.health_level }}</p>
-    <p>Doctor: {{ latest_doctor_visit.doctor_first_name + " " + latest_doctor_visit.doctor_last_name }}</p>
-    <p>Hospital: {{ latest_doctor_visit.hospital_name }}</p>
-{% else %}
-    <p>No doctor visits recorded for {{ pet.pet_name }}.</p>
-{% endif %}
-
-<!-- Display pet pictures -->
-<h3>Pet Pictures</h3>
-{% if pet_images %}
-    <ul>
-        {% for image in pet_images %}
-            <li><img src="{{ image['image_url'] }}" alt="Pet Image"></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No pictures available for {{ pet.pet_name }}.</p>
-{% endif %}
-
-<!-- Display comments section -->
-<h3>Comments</h3>
-{% if pet_comments %}
-    <ul>
-        {% for comment in pet_comments %}
-            <li>{{ comment.username }} - {{ comment.comment_date }}: {{ comment.comment_text }}</li>
-            {% if comment.username == username %}
-                <form method="post" action="{{ url_for('delete_comment', pet_id=pet.pet_id, comment_id=comment.comment_id) }}" style="display: inline;">
-                    <button type="submit">Delete</button>
-                </form>
+    <h2>{{ pet.pet_name }}'s Details</h2>
+    <div class="row mt-5">
+        <div class="col col-md-6">
+            <div class="section">
+                <p>Type: {{ pet.pet_type }}</p>
+                <p>Age: {{ pet.age }}</p>
+                <p>Height: {{ pet.height }}</p>
+                <p>Weight: {{ pet.weight }}</p>
+                <p>Color: {{ pet.color }}</p>
+                <p>Breed: {{ pet.breed_name }}</p>
+            </div>
+        </div>
+        <div class="col col-md-6">
+            {% if pet_images %}
+                <img src="{{ pet_images[0]['image_url'] }}" alt="First Pet Image" style="max-width: 100%; height: auto;">
+            {% else %}
+                <p>No images available for {{ pet.pet_name }}.</p>
             {% endif %}
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No comments available for {{ pet.pet_name }}.</p>
-{% endif %}
+        </div>
+    </div>
+    <!-- Display pet information -->
+    
 
-{% if username %}
- <!-- Add your form for posting comments here -->
- <form method="post" action="{{ url_for('add_comment', pet_id=pet.pet_id) }}" id="commentForm">
-    <label for="comment_text">Add Comment:</label>
-    <textarea id="comment_text" name="comment_text" rows="4" required></textarea>
-    <br>
-    <button type="submit">Post Comment</button>
-</form>
-{% else %}
-<p>Please log in to schedule a visit or post a comment.</p>
-{% endif %}
+    <!-- Display doctor visit details -->
+    <div class="section">
+        <h3>{{ pet.pet_name }}'s Latest Doctor Visit</h3>
+        {% if latest_doctor_visit %}
+            <p>Date: {{ latest_doctor_visit.visit_date }}</p>
+            <p>Diagnosis: {{ latest_doctor_visit.diagnosis }}</p>
+            <p>Medications: {{ latest_doctor_visit.medications }}</p>
+            <p>Health Level: {{ latest_doctor_visit.health_level }}</p>
+            <p>Doctor: {{ latest_doctor_visit.doctor_first_name + " " + latest_doctor_visit.doctor_last_name }}</p>
+            <p>Hospital: {{ latest_doctor_visit.hospital_name }}</p>
+        {% else %}
+            <p>No doctor visits recorded for {{ pet.pet_name }}.</p>
+        {% endif %}
+    </div>
 
-
-<!-- Implement form for scheduling visits, commenting, adopting, etc. -->
-
-<h3>Scheduled Interactions for {{ pet.pet_name }}</h3>
-    {% if user_interaction_list %}
-        <ul>
-            {% for interaction in user_interaction_list %}
-
-                {% if interaction[3] == username %}
-                <li>
-                    <a href="{{ url_for('edit_interaction', pet_id=pet.pet_id, interaction_id=interaction[5]) }}">
-                        {{interaction[3]}} : {{ interaction[0] }} - {{ interaction[1] }} to {{ interaction[2] }} ({{ interaction[4] }})
-                    </a>
-                </li>
-                    
-                {% else %}
-                <li>
-                    {{interaction[3]}} : {{ interaction[0] }} - {{ interaction[1] }} to {{ interaction[2] }} ({{ interaction[4] }})
-                </li>
-                        
-                {% endif %}
-            {% endfor %}
-        </ul>
+    <!-- Display pet pictures -->
+    
+<div class="section mt-5">
+    <h3>{{ pet.pet_name }}'s Pictures</h3>
+    {% if pet_images %}
+        <div id="petImageCarousel" class="carousel slide" data-ride="carousel" style="width: 400px; height: 300px; overflow: hidden;">
+            <div class="carousel-inner">
+                {% set counter = 0 %}
+                {% for image in pet_images %}
+                    <div class="carousel-item {% if counter == 0 %}active{% endif %}">
+                        <img src="{{ image['image_url'] }}" alt="Pet Image" class="d-block w-100" style="height: 100%; width: auto;">
+                    </div>
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#petImageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#petImageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
     {% else %}
-        <p>No scheduled interactions for {{ pet.pet_name }}.</p>
+        <p>No pictures available for {{ pet.pet_name }}.</p>
     {% endif %}
+</div>
 
-    {% if schedule_already_present_error %}
-        {{schedule_already_present_error}}
-    {% endif %}
 
-<!-- Add your form for scheduling visits here -->
-{% if username %}
-    <form method="post" action="{{ url_for('pet_details', pet_id=pet.pet_id) }}" id = 'visitForm'>
-        <label for="visit_date">Visit Date:</label>
-        <input type="date" id="visit_date" name="visit_date" required>
 
-        <br>
+    <!-- Display comments section -->
+    <div class="section mt-5">
+        <h3>Comment on {{ pet.pet_name }}'s pictures</h3>
+        {% if pet_comments %}
+            <ul>
+                {% for comment in pet_comments %}
+                    <li>{{ comment.username }} - {{ comment.comment_date }}: {{ comment.comment_text }}
+                        {% if comment.username == username %}
+                            <form method="post" action="{{ url_for('delete_comment', pet_id=pet.pet_id, comment_id=comment.comment_id) }}" style="display: inline;">
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments available for {{ pet.pet_name }}.</p>
+        {% endif %}
 
-        <label for="start_time">Start Time:</label>
-        <input type="time" id="start_time" name="start_time" required>
+        {% if username %}
+            <!-- Add your form for posting comments here -->
+            <form method="post" action="{{ url_for('add_comment', pet_id=pet.pet_id) }}" id="commentForm">
+                <label for="comment_text">Add Comment:</label>
+                <textarea id="comment_text" name="comment_text" rows="4" required class="form-control"></textarea>
+                <br>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+        {% else %}
+            <p>Please log in to schedule a visit or post a comment.</p>
+        {% endif %}
+    </div>
 
-        <br>
+    <!-- Display scheduled interactions -->
+    <div class="section mt-5">
+        <h3>Scheduled Interactions for {{ pet.pet_name }}</h3>
+        {% if user_interaction_list %}
+            <ul>
+                {% for interaction in user_interaction_list %}
+                    <li>
+                        {% if interaction[3] == username %}
+                            <a href="{{ url_for('edit_interaction', pet_id=pet.pet_id, interaction_id=interaction[5]) }}">
+                                {{interaction[3]}} : {{ interaction[0] }} - {{ interaction[1] }} to {{ interaction[2] }} ({{ interaction[4] }}) - Edit your schedule
+                            </a>
+                        {% else %}
+                            {{interaction[3]}} : {{ interaction[0] }} - {{ interaction[1] }} to {{ interaction[2] }} ({{ interaction[4] }})
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No scheduled interactions for {{ pet.pet_name }}.</p>
+        {% endif %}
 
-        <label for="end_time">End Time:</label>
-        <input type="time" id="end_time" name="end_time" required>
+        {% if schedule_already_present_error %}
+            <p class="text-danger">{{schedule_already_present_error}}</p>
+        {% endif %}
 
-        <br>
+        <!-- Add your form for scheduling visits here -->
+        {% if username %}
+            <form method="post" action="{{ url_for('pet_details', pet_id=pet.pet_id) }}" id='visitForm'>
+                <h3>Schedule a visit with {{ pet.pet_name }}</h3>
+                <div class="form-group">
+                    <label for="visit_date">Visit Date:</label>
+                    <input type="date" id="visit_date" name="visit_date" required class="form-control">
+                </div>
 
-        <label for="visit_type">Visit Type:</label>
-        <select id="visit_type" name="visit_type" required>
-            <option value="play">Play</option>
-            <option value="feed">Feed</option>
-            <option value="pet">Pet</option>
-            <!-- Add more visit types as needed -->
-        </select>
+                <div class="form-group">
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" id="start_time" name="start_time" required class="form-control">
+                </div>
 
-        <br>
+                <div class="form-group">
+                    <label for="end_time">End Time:</label>
+                    <input type="time" id="end_time" name="end_time" required class="form-control">
+                </div>
 
-        <button type="submit">Schedule Visit</button>
-    </form>
-{% else %}
-    <p>Please log in to schedule a visit or post a comment.</p>
-{% endif %}
+                <div class="form-group">
+                    <label for="visit_type">Visit Type:</label>
+                    <select id="visit_type" name="visit_type" required class="form-control">
+                        <option value="play">Play</option>
+                        <option value="feed">Feed</option>
+                        <option value="pet">Pet</option>
+                        <!-- Add more visit types as needed -->
+                    </select>
+                </div>
 
-    <script>
-        function clearVisitForm() {
-            // Reset the form fields
-            document.getElementById('visitForm').reset();
-        }
-
-        function clearCommentForm() {
-            document.getElementById('commentForm').reset();
-        }
-    </script>
-
+                <button type="submit" class="btn btn-primary">Schedule Visit</button>
+            </form>
+        {% else %}
+            <p>Please log in to schedule a visit or post a</p>
+            {% endif %}
+        </div>
+    
+        </div>
+    
+        <!-- Include Bootstrap JS and Popper.js -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    
+        <script>
+            function clearVisitForm() {
+                // Reset the form fields
+                document.getElementById('visitForm').reset();
+            }
+    
+            function clearCommentForm() {
+                document.getElementById('commentForm').reset();
+            }
+        </script>
+    
 </body>
 </html>
-

@@ -5,26 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Pet Adoption and Care System</title>
+    
+    <!-- Link to Bootstrap CSS file -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Pet Adoption and Care System</h1>
-    </header>
-    
-    <section>
-        {% include 'navbar.html' %}
-        <p>
-            Thank you for visiting our website! We are excited to have you here.
-            Our website is dedicated to providing Pet Adoption and Care System.
-            Feel free to explore and discover the many features we offer.
-        </p>
-    </section>
+    <!-- Navbar section -->
+    {% include 'navbar.html' %}
 
-    <footer>
-        <p>
-            If you have any questions or need assistance, please don't hesitate to contact us.
-            Enjoy your stay!
-        </p>
-    </footer>
+    <!-- Content section within a Bootstrap container -->
+    
+    <div class="container">
+        <header>
+            <h1>Welcome to Pet Adoption and Care System</h1>
+        </header>
+
+        <div class="jumbotron jumbotron-fluid">
+            <section class="p-4 rounded">
+                <p class="fs-5">
+                    Thank you for visiting our website! We are excited to have you here.
+                    Our website is dedicated to providing Pet Adoption and Care System.
+                    Feel free to explore and discover the many features we offer.
+                </p>
+            </section>
+        </div>
+        
+        <footer>
+            <p>
+                If you have any questions or need assistance, please don't hesitate to contact us.
+                Enjoy your stay!
+            </p>
+        </footer>
+    </div>
+
+    <!-- Footer section -->
+    
+
+    <!-- Link to Bootstrap JS file (if needed) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 </body>
 </html>

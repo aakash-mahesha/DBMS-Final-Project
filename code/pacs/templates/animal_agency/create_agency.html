@@ -66,6 +66,16 @@
                             <input type="number" id="contact" name="contact" class="form-control" required>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="hospital_associated">Agency Associated Hospital: </label>
+                            <select id="hospital_associated" name="hospital_associated" required>
+                                {% for option in hospitals %}
+                                    <option value="{{ option['hospital_name'] }}">{{ option['hospital_name'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
                     <input type="submit" value="Create Agency" class="btn btn-primary btn-block">
                 </form>

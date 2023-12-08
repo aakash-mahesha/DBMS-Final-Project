@@ -34,6 +34,13 @@
         <label for="contact">Agency Contact Number:</label>
         <input type="number" id="contact" name="contact" value="{{ agency.agency_contact_number }}" required><br>
 
+        <label for="hospital_associated">Agency Associated Hospital</label>
+        <select id="hospital_associated" name="hospital_associated" required>
+            {% for option in hospitals %}
+                <option value="{{ option['hospital_name'] }}" {% if option['hospital_name'] == selected_h_name %}selected{% endif %}>{{ option['hospital_name'] }}</option>
+            {% endfor %}
+        </select>
+        <br>
         <input type="submit" value="Edit Agency">
     </form>
 

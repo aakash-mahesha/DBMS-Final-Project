@@ -1,60 +1,116 @@
-<!-- templates/pet_form.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Details Form</title>
+    <!-- Add Bootstrap CSS link -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     {% include 'navbar.html' %}
-    <h1>Enter Pet Details</h1>
-    <form action="{{ url_for('add_agency_pet') }}" method="post" enctype="multipart/form-data">
-        <label for="pet_name">Pet Name:</label>
-        <input type="text" id="pet_name" name="pet_name" required><br>
+    <div class="container mt-5">
+        <h1 class="text-center">Enter Pet Details</h1>
+        <form action="{{ url_for('add_agency_pet') }}" method="post" enctype="multipart/form-data">
+            <div class="row">
 
-        <label for="pet_type">Pet Type:</label>
-        <select id="pet_type" name="pet_type" required>
-            <option value="Dog">Dog</option>
-            <option value="Cat">Cat</option>
-            <option value="Bird">Bird</option>
-            <option value="Rodents">Rodents</option>
-        </select><br>
+                <!-- First Column -->
+                <div class="col-md-6">
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required><br>
+                    <!-- Pet Name -->
+                    <div class="form-group">
+                        <label for="pet_name">Pet Name:</label>
+                        <input type="text" class="form-control" id="pet_name" name="pet_name" required>
+                    </div>
 
-        <label for="height">Height (in inches):</label>
-        <input type="number" id="height" name="height" required><br>
+                    <!-- Pet Type -->
+                    <div class="form-group">
+                        <label for="pet_type">Pet Type:</label>
+                        <select class="form-control" id="pet_type" name="pet_type" required>
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option>
+                            <option value="Bird">Bird</option>
+                            <option value="Rodents">Rodents</option>
+                        </select>
+                    </div>
 
-        <label for="weight">Weight (in pounds):</label>
-        <input type="number" id="weight" name="weight" required><br>
+                    <!-- Age -->
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
 
-        <label for="color">Color:</label>
-        <input type="text" id="color" name="color" required><br>
+                    <!-- Height -->
+                    <div class="form-group">
+                        <label for="height">Height (in inches):</label>
+                        <input type="number" class="form-control" id="height" name="height" required>
+                    </div>
 
-        <label for="breed_name">Breed Name:</label>
-        <input type="text" id="breed_name" name="breed_name"><br>
+                    <!-- Weight -->
+                    <div class="form-group">
+                        <label for="weight">Weight (in pounds):</label>
+                        <input type="number" class="form-control" id="weight" name="weight" required>
+                    </div>
+                </div>
 
-        <label for="adopted">Adopted:</label>
-        <input type="checkbox" id="adopted" name="adopted"><br>
+                <!-- Second Column -->
+                <div class="col-md-6">
+                    <!-- Color -->
+                    <div class="form-group">
+                        <label for="color">Color:</label>
+                        <input type="text" class="form-control" id="color" name="color" required>
+                    </div>
 
-        <label for="adopted_by">Adopted By:</label>
-        <input type="text" id="adopted_by" name="adopted_by"><br>
+                    <!-- Breed Name -->
+                    <div class="form-group">
+                        <label for="breed_name">Breed Name:</label>
+                        <input type="text" class="form-control" id="breed_name" name="breed_name">
+                    </div>
 
-        <label for="adoption_date">Adoption Date:</label>
-        <input type="date" id="adoption_date" name="adoption_date"><br>
+                    <!-- Adopted -->
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="adopted" name="adopted">
+                        <label class="form-check-label" for="adopted">Adopted:</label>
+                    </div>
 
-        {% if not session['agency'] %}
-        <label for="provided_by_agency">Provided By Agency:</label>
-        <input type="text" id="provided_by_agency" name="provided_by_agency"><br>
-        {% else %}
+                    <!-- Adopted By -->
+                    <div class="form-group">
+                        <label for="adopted_by">Adopted By:</label>
+                        <input type="text" class="form-control" id="adopted_by" name="adopted_by">
+                    </div>
 
-        {% endif %}
+                    <!-- Adoption Date -->
+                    <div class="form-group">
+                        <label for="adoption_date">Adoption Date:</label>
+                        <input type="date" class="form-control" id="adoption_date" name="adoption_date">
+                    </div>
 
-        <input type="file" name="images" multiple accept="image/*">
+                    <!-- Provided By Agency -->
+                    {% if not session['agency'] %}
+                    <div class="form-group">
+                        <label for="provided_by_agency">Provided By Agency:</label>
+                        <input type="text" class="form-control" id="provided_by_agency" name="provided_by_agency">
+                    </div>
+                    {% else %}
+                    {% endif %}
+                </div>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
+            <!-- Images -->
+            <div class="form-group">
+                <label for="images">Pet Images:</label>
+                <input type="file" class="form-control-file" name="images" multiple accept="image/*">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 </body>
 </html>

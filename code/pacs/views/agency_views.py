@@ -101,7 +101,7 @@ def edit_agency(agency_name):
         if request.method == 'POST':
             # Update user data from the form
             print("FORM:******", request.form)
-            agency_name = request.form.get('name')
+            agency_name = agency_name
             agency_password = request.form.get('password')
             agency_streetnumber = request.form.get('street_no')
             streetname = request.form.get('street_name')

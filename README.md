@@ -65,11 +65,11 @@ The agency is responsible for updating the system with the recent doctor’s vis
 
 ## UML Design
 
-<img src="./pacs_uml.png" height=400>
+<img src="./pacs_uml.png" height=600 width=600>
 
 ## Activity Diagram
 
-<img src="./pacs_activity_diagram.png" height=400>
+<img src="./pacs_activity_diagram.png" height=800 width=800>
 
 ## Technical Deep-Dive and Specifications
 
@@ -92,16 +92,18 @@ We have used a relational database to store our data related to pets, users, hos
 - **Technical Expertise Gained:**
     1. Designing a database schema for a big and complicated use-case like tracking pets up for adoption, and their hospital visits.
     2. Writing cool DBMS queries that span multiple tables to extract the exact data points we need to show.
-    3. Writing procedures, functions, triggers in MySQL. This really helps as it reduces our load to code these in the language required by our server (like Python, Javascript) and are more robust in general.
+    3. Writing procedures, functions, and triggers in MySQL. This helps as it reduces our load to code these in the language required by our server (like Python, Javascript, etc) and is more robust in general.
     4. Handling multiple HTML pages/views/routes and debugging, error handling.
 - **Insights:**
-    1. TODO
+    1. Realized that when generating data, a proper requirement analysis should be done concerning the domain and make sure the information being collected is important.
+    2. Dealing with inconsistency in data, when the data is being fetched from external sources.
+    3. Importance of creating custom data or fetching publically available data and modifying it into 3rd normal form schema to minimize redundancy and improve data integrity.
 - **Contemplated alternative design/approaches:**
-    1. TODO
-    2. TODO
+    1. Utilization of a NoSQL Database, such as MongoDB, would have been easier to design schema, store data and host it on the cloud. Unlike MySQL, no need for multiple tables to store information. All the necessary attributes of a collection can be stored as fields in a document.
+    2. Could have utilized more indexing features in the application to provide a custom search facility to the users.
+    3. Rather than 'AUTO_INCREMENT' field to generate new unique attributes for the tables, usage of other strategies such as Hashing strategies, would minimize the issue of generating skipped unique fields due to rolled-back transactions, concurrency, multiple inserts and bulk inserts.
 - **Code that didn't work:**
-TODO
-
+    
 ## Future Work
 ### Planned uses of the database:
 1. **Enhanced Pet Health Records:**

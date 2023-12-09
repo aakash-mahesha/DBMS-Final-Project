@@ -3,11 +3,9 @@ from pacs import app, connection
 import datetime as dt
 from datetime import datetime
 
-# Pet Details and Actions
 @app.route('/adoption/pet/<int:pet_id>', methods=['GET', 'POST'])
 def pet_details(pet_id):
     
-    # Check if a user is logged in
     if 'user' in session:
         username = session['user']['username']
     elif 'agency' in session:
@@ -33,7 +31,6 @@ def pet_details(pet_id):
                             latest_doctor_visit = latest_doctor_visit)
         
 
-# Function to get pet details from the database
 def get_pet_details(pet_id):
     pet_data = None
     pet_images = None
@@ -81,7 +78,6 @@ def schedule_pet_interaction(username, pet_id, interaction_type, interaction_dat
     try:
         db = connection()
         with db.cursor() as cursor:
-            # Insert interaction details into the 'user_pet_interactions' table
             
             cursor.callproc(
                 "insert_user_pet_interaction",

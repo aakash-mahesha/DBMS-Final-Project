@@ -96,8 +96,6 @@ def edit_agency(agency_name):
             hospital_results = get_hospitals()
             
 
-        # print("request method", request.method)
-        # print("form:", request.form)
         if request.method == 'POST':
             # Update user data from the form
             print("FORM:******", request.form)
@@ -160,18 +158,7 @@ def get_agency_pets():
             cursor.callproc('get_agency_pet_name_breed_image', (agency_name,))
             print("REACHED HERE")
             pet_data = cursor.fetchall()
-            print(pet_data)
-            # pet_deets = []
-            # pet_imgs = []
-            # if(len(pet_data) > 0):
-            #     for pet in pet_data:
-            #         pet_id = pet.get('pet_id')
-            #         pet_details, pet_images, _, _ = get_pet_details(pet_id)
-            #         pet_deets.append(pet_details[0])
-            #         pet_imgs.append(pet_images)
-            #         print(pet_details, "****")
-            #         print(pet_images, "******")
-            #         # print(pet_details)
+            
         return render_template('pets/agency_pet_list.html', pets=pet_data)
 
     except Exception as e:
@@ -180,7 +167,6 @@ def get_agency_pets():
         db.close()
 
 def add_image_to_pet():
-    # Call procedure to enter
 
     pass
 

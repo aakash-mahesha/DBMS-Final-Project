@@ -157,16 +157,21 @@ def get_agency_pets():
     try:
         db = connection()
         with db.cursor() as cursor:
-            cursor.callproc('get_pets_for_agency', (agency_name,))
+            cursor.callproc('get_agency_pet_name_breed_image', (agency_name,))
+            print("REACHED HERE")
             pet_data = cursor.fetchall()
-            pet_deets = []
-            if(len(pet_data) > 0):
-                for pet in pet_data:
-                    pet_id = pet.get('pet_id')
-                    pet_details = get_pet_details(pet_id)
-                    pet_deets.append(pet_details)
-                    # print(pet_details)
-            
+            print(pet_data)
+            # pet_deets = []
+            # pet_imgs = []
+            # if(len(pet_data) > 0):
+            #     for pet in pet_data:
+            #         pet_id = pet.get('pet_id')
+            #         pet_details, pet_images, _, _ = get_pet_details(pet_id)
+            #         pet_deets.append(pet_details[0])
+            #         pet_imgs.append(pet_images)
+            #         print(pet_details, "****")
+            #         print(pet_images, "******")
+            #         # print(pet_details)
         return render_template('pets/agency_pet_list.html', pets=pet_data)
 
     except Exception as e:
@@ -210,6 +215,7 @@ def add_agency_pet():
                 uploaded_images_urls.append(uploaded_url)
 
         if adopted == False:
+            print("entered here")
             adopted_by = None
             adoption_date = None
         provided_by_agency = agency_name
@@ -230,6 +236,7 @@ def add_agency_pet():
                                 provided_by_agency,))
                 
                 result = cursor.fetchone()
+                print(result)
                 db.commit()
                 print("Pet ID retrieved: *********",result['pet_id_result'])
                 print(uploaded_images_urls)

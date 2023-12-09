@@ -16,6 +16,7 @@ def edit_interaction(pet_id,interaction_id):
             new_end_time = request.form.get('end_time')
             new_visit_type = request.form.get('visit_type')
 
+            print(new_start_time, new_end_time)
             # Implement your logic to update the interaction in the database
             update_interaction_details(interaction_id,new_visit_date, new_start_time, new_end_time, new_visit_type)
 

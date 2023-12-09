@@ -41,6 +41,35 @@ Pip/Conda generally install the software in their respective installation direct
 
 6. From here, you can create a user/agency profile or login to the existing ones and manage your pets and everything about your pet.
 
+## Conceptual Design
+
+The database for the "Pet Adoption and Care System" is designed to facilitate a comprehensive and immersive virtual pet adoption experience. The core entities in this system include User, Pet, Animal Agency (like Blue Cross), Vet Hospital, Doctor, Pet Breeds, Pet Images.<br><br>
+
+Each User is uniquely identiﬁed by a User ID and has associated attributes such as username(unique), password, eamil, name (First, Last), and Address (street_no, street_name, city, state,zip). Multiple users can have the same address. Users can adopt 1 or more Pets but each pet can only be adopted by one user.<br><br>
+
+The System contains multiple Animal Agencies which shelter these animals, till the time they are adopted. A Pet (animal) is sheltered by only one Agency which has a unique agency name, a unique address (street_no, street_name, city, state, zip), and a person-in-charge (ﬁrst name, last name, contact). An agency can shelter one to many pets(animals).<br><br>
+
+Whenever a pet agency registers itself to our pet adoption and care system, it must partner with 1 or many Vet hospitals that are provided by our system. The Entity Vet Hospital consists of following attributes: hospital_name (unique), hospital address (street_no, street_name, city, state, zip) and hospital contact (first_name, last_name and contact_number). Each hospital can be partnered with 1 to many animal agencies.<br><br>
+
+Our pet agency and care system also tracks the doctors who work at the hospitals that treat pets. The Doctor entity consists of doctor_id which is unique, doctor_first_name, doctor_last_name, degree and experience. At a vet hospital, multiple doctors can be employed but each doctor can work at only one hospital.<br><br>
+
+Each Pet is characterized by a Pet ID and attributes like Name, Type (dog, cat, bird, rodent), Age, height, weight, color and Health Level. When a User adopts a pet, the adoption date will be stored in the database. Also, each Pet belongs to a speciﬁc breed. Each breed has a unique name and description. There can be multiple animals of the same breed.<br><br>
+
+The system also stores pictures of each pet uploaded by the agency. The Pet image entity consists of attributes such as image_id (unique) and URL of the image that is stored in remote storage services. Each pet can have 1 to many images but each image is of only one pet.<br><br>
+
+The user can schedule interactions with pets through the pet adoption and care system. Interaction with a pet would help the user understand the pet and come to a decision whether to adopt the pet or not. Each interaction scheduled by a user with a pet is recorded in the database with the following attributes: unique interaction_id, interaction_type(Play, Feed, Pet), interaction_date, interaction_start_time and interaction_end_time. Each user can schedule an interaction with 0 to many pets and each pet can be scheduled for an interaction with 0 to many users.<br><br>
+
+The users are allowed to view the pet profiles and comment on the pictures posted of them. Each user can post 0 to many comments on a particular pet. The comments are recorded with the following information: comment_id, comment_text, comment_date. Each pet can be commented on with 0 to many users.<br><br>
+
+The agency is responsible for updating the system with the recent doctor’s visit of a pet. Each visit’s details are stored as follows: visit_id (unique), visit_date, diagnosis, medication, health_level(Great, Good, Moderate, Need Care). Each pet can have 0 to many visits with a doctor and each doctor can treat 0 to many pets.<br><br>
+
+## UML Design
+
+<img src="./pacs_uml.png" height=400>
+
+## Activity Diagram
+
+<img src="./pacs_activity_diagram.png" height=400>
 
 ## Technical Deep-Dive and Specifications
 

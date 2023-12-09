@@ -20,12 +20,12 @@
 
                 <div class="form-group">
                     <label for="start_time">Start Time:</label>
-                    <input type="time" id="appt" name="appt" min="09:00" max="18:00" required />
+                    <input type="time" id="start_time" name="start_time" min="09:00" max="18:00" required />
                 </div>
                 
                 <div class="form-group">
                     <label for="end_time">End Time:</label>
-                    <input type="time" id="appt" name="appt" min="09:00" max="18:00" required />
+                    <input type="time" id="end_time" name="end_time" min="09:00" max="18:00" required />
                 </div>
 
                 <div class="form-group">
@@ -44,19 +44,9 @@
         {% endif %}
     </div>
 
-    <!-- Include Bootstrap JS and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- <script>
-        // Set the minimum and maximum time values
-        var startTimeInput = document.getElementById('start_time');
-        startTimeInput.setAttribute('min', '10:00');
-        startTimeInput.setAttribute('max', '15:00');
     
-        var endTimeInput = document.getElementById('end_time');
-        endTimeInput.setAttribute('min', '10:00');
-        endTimeInput.setAttribute('max', '15:00');
-    </script> -->
 </body>
 </html>

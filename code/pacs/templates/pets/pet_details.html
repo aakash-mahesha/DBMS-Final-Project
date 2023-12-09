@@ -34,10 +34,6 @@
             {% endif %}
         </div>
     </div>
-    <!-- Display pet information -->
-    
-
-    <!-- Display doctor visit details -->
     <div class="section">
         <h3>{{ pet.pet_name }}'s Latest Doctor Visit</h3>
         {% if latest_doctor_visit %}
@@ -51,8 +47,6 @@
             <p>No doctor visits recorded for {{ pet.pet_name }}.</p>
         {% endif %}
     </div>
-
-    <!-- Display pet pictures -->
     
 <div class="section mt-5">
     <h3>{{ pet.pet_name }}'s Pictures</h3>
@@ -81,9 +75,6 @@
     {% endif %}
 </div>
 
-
-
-    <!-- Display comments section -->
     <div class="section mt-5">
         <h3>Comment on {{ pet.pet_name }}'s pictures</h3>
         {% if pet_comments %}
@@ -103,7 +94,6 @@
         {% endif %}
 
         {% if username %}
-            <!-- Add your form for posting comments here -->
             <form method="post" action="{{ url_for('add_comment', pet_id=pet.pet_id) }}" id="commentForm">
                 <label for="comment_text">Add Comment:</label>
                 <textarea id="comment_text" name="comment_text" rows="4" required class="form-control"></textarea>
@@ -114,8 +104,6 @@
             <p>Please log in to schedule a visit or post a comment.</p>
         {% endif %}
     </div>
-
-    <!-- Display scheduled interactions -->
     <div class="section mt-5">
         <h3>Scheduled Interactions for {{ pet.pet_name }}</h3>
         {% if user_interaction_list %}
@@ -140,7 +128,6 @@
             <p class="text-danger">{{schedule_already_present_error}}</p>
         {% endif %}
 
-        <!-- Add your form for scheduling visits here -->
         {% if username %}
             <form method="post" action="{{ url_for('pet_details', pet_id=pet.pet_id) }}" id='visitForm'>
                 <h3>Schedule a visit with {{ pet.pet_name }}</h3>
@@ -165,7 +152,6 @@
                         <option value="play">Play</option>
                         <option value="feed">Feed</option>
                         <option value="pet">Pet</option>
-                        <!-- Add more visit types as needed -->
                     </select>
                 </div>
 
@@ -177,15 +163,11 @@
         </div>
     
         </div>
-    
-        <!-- Include Bootstrap JS and Popper.js -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
-        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     
         <script>
             function clearVisitForm() {
-                // Reset the form fields
                 document.getElementById('visitForm').reset();
             }
     

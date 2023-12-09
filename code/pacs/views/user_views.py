@@ -1,11 +1,9 @@
 from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 
-# Create
 @app.route('/users/create', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
-        # Get user data from the form
         username = request.form.get('username')
         email = request.form.get('email')
         user_password = request.form.get('user_password')
@@ -18,11 +16,9 @@ def create_user():
         state = request.form.get('state')
         zip_code = request.form.get('zip')
 
-        # Create a new user instance
         try:
             db = connection()
             with db.cursor() as cursor:
-                # Insert a new user into the database
                 cursor.callproc('insert_new_user',(username, 
                                                    user_password, 
                                                    email,
@@ -59,7 +55,6 @@ def users():
     finally:
         db.close()
 
-# Update
 @app.route('/users/edit/<string:username>', methods=['GET', 'POST'])
 def edit_user(username):
     try:
@@ -76,7 +71,6 @@ def edit_user(username):
             address = cursor.fetchone()
 
         if request.method == 'POST':
-            # Update user data from the form
             print(request.form.get('username'))
             username = username
             email = request.form.get('email')
@@ -99,7 +93,6 @@ def edit_user(username):
                                  city,
                                  state,
                                  zip_code)
-            # Commit the changes to the database
             with db.cursor() as cursor:
                 cursor.callproc('update_user',
                                 (username, 
@@ -121,7 +114,6 @@ def edit_user(username):
 
     return render_template('users/edit_user.html', user=user, address=address)
 
-# Delete
 @app.route('/users/delete/<string:username>')
 def delete_user(username):
     try:
@@ -137,5 +129,3 @@ def delete_user(username):
 
     return redirect(url_for('landing'))
 
-
-# (TODO) Add more functions/queries here. Decide whether to have methods in the db or here.

@@ -4,20 +4,20 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <!-- Navbar brand (logo or site name) on the left -->
+
         <a class="navbar-brand" href="{{ url_for('landing') }}">Pet Adoption</a>
 
-        <!-- Navbar toggler button for small screens -->
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navbar links on the left -->
+    
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="#" onclick="goBack()">Back</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('landing') }}">Welcome</a></li>
-                <!-- Add more links for other pages as needed -->
+          
 
                 {% if session['user'] %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('adoption_menu') }}">Adopt Pets</a></li>
@@ -40,7 +40,6 @@
             </ul>
         </div>
 
-        <!-- User or agency name on the extreme right -->
         <div class="ml-auto">
             {% if session['user'] %}
                 Hello, {{ session['user'].get('first_name') + " " + session['user'].get('last_name')}}!

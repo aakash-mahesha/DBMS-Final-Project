@@ -96,8 +96,6 @@ def edit_agency(agency_name):
             hospital_results = get_hospitals()
             
 
-        # print("request method", request.method)
-        # print("form:", request.form)
         if request.method == 'POST':
             # Update user data from the form
             print("FORM:******", request.form)
@@ -165,7 +163,6 @@ def get_agency_pets():
                     pet_id = pet.get('pet_id')
                     pet_details = get_pet_details(pet_id)
                     pet_deets.append(pet_details)
-                    # print(pet_details)
             
         return render_template('pets/agency_pet_list.html', pets=pet_data)
 
@@ -175,7 +172,6 @@ def get_agency_pets():
         db.close()
 
 def add_image_to_pet():
-    # Call procedure to enter
 
     pass
 

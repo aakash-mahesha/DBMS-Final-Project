@@ -2,11 +2,9 @@ from flask import render_template, request, redirect, url_for, session
 from pacs import app, connection
 from datetime import datetime
 
-# Delete Comment View
 @app.route('/adoption/pet/<int:pet_id>/delete_comment/<int:comment_id>', methods=['GET', 'POST'])
 def delete_comment(pet_id, comment_id):
     if 'user' in session:
-        # Delete the comment from the database
         print(comment_id)
         delete_comment_from_database(comment_id)
 
@@ -18,9 +16,7 @@ def delete_comment_from_database(comment_id):
     try:
         db = connection()
         with db.cursor() as cursor:
-            # Call the stored procedure to delete a comment by comment_id
             cursor.callproc('delete_comment_by_id', (comment_id,))
-            # Commit the changes
             db.commit()
 
     except Exception as e:
@@ -36,7 +32,6 @@ def add_comment(pet_id):
         pet_id = pet_id
         comment_date = datetime.now()
 
-        # Add logic to store the comment in the database
         try:
             db = connection()
             with db.cursor() as cursor:

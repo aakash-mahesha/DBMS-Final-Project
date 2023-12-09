@@ -14,11 +14,9 @@ def user_login():
                 user = cursor.fetchone()
 
                 if user and user['user_password'] == password:
-                    # Authentication successful
                     session['user'] = user
                     return redirect(url_for('get_adopted_pets_list'))
                 else:
-                    # Authentication failed
                     return render_template('user_login.html', error="Invalid username or password")
         except Exception as e:
             return render_template('error.html', error_message=f"Error: {e}")
@@ -40,11 +38,9 @@ def agency_login():
                 agency = cursor.fetchone()
 
                 if agency and agency['agency_password'] == password:
-                    # Authentication successful
                     session['agency'] = agency
                     return redirect(url_for('landing'))
                 else:
-                    # Authentication failed
                     return render_template('agency_login.html', error="Invalid username or password")
         except Exception as e:
             return render_template('error.html', error_message=f"Error: {e}")
@@ -55,11 +51,9 @@ def agency_login():
 
 @app.route('/logout')
 def logout():
-    # Clear user-related information from the session
     if session.get('user', None):
         session.pop('user')
     if session.get('agency', None):
         session.pop('agency')
 
-    # Redirect to the landing page or any other desired page after logout
     return redirect(url_for('landing'))
